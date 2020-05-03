@@ -106,4 +106,5 @@ INSERT INTO books VALUES (16, 3, 'C Programming Language (2nd Edition)', 'Brian 
 INSERT INTO books VALUES (27, 3, 'C++ Primer Plus (5th Edition)', 'Stephan Prata', ' 9780672326974', 36.94);
 INSERT INTO books VALUES (29, 3, 'The C++ Programming Language', 'Bjarne Stroustrup', '0201700735', 67.49);
 	
-INSERT INTO users VALUES (1, 'scm4', 'a8af855d47d091f0376664fe588207f334cdad22');
+INSERT INTO users VALUES (1, 'Hilfesuchender', 'a8af855d47d091f0376664fe588207f334cdad22');
+INSERT INTO users VALUES (2, 'Freiwilliger', 'a8af855d47d091f0376664fe588207f234cdad22');
