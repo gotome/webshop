@@ -51,8 +51,9 @@ class DataManager implements IDataManager {
               ];
               break;
             case 'users':
-              $data = [
-                1 => new User(1, "scm4", "a8af855d47d091f0376664fe588207f334cdad22"), //USER = scm4; PASSWORD = scm4
+              $data = [                             
+                1 => new User(1, "Hilfesuchender", "2216d6cdd869e0cbdd4a51f74e17e1ba7150db5f"), //USER = Hilfesuchender; PASSWORD = Hilfesuchender
+                2 => new User(2, "Freiwilliger", "4b35ad500817192730ce10a1335b469372cd92fd"), //USER = Freiwilliger; PASSWORD = Freiwilliger
               ];
 				      break;
         }
