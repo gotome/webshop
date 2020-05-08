@@ -1,6 +1,5 @@
 <?php
-require_once('lib/Log/logger.php'); 
-use Data\Log; 
+use Log\ConsoleWrite; 
 
 $servername = "localhost";
 $username = "admin";
@@ -14,12 +13,12 @@ try {
         $sql = "CREATE DATABASE fh_scm4_bookshop";
         // use exec() because no results are returned
         $conn->exec($sql);
-        Log::Write("Database created successfully<br>"); 
+        ConsoleWrite::writeToConsole("Database created successfully<br>"); 
     }
 catch(PDOException $e)
     {
         //logfile Entry 
-        Log::Write($sql . "<br>" . $e->getMessage()); 
+        ConsoleWrite::writeToConsole($sql . "<br>" . $e->getMessage()); 
     }
 
 $conn = null;
