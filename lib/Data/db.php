@@ -15,6 +15,7 @@ try {
            echo $row['name']."<br />";
            echo $row['bitCode']."<br />";
         }        
+        
     
     }
 catch(PDOException $e)
