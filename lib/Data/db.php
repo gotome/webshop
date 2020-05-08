@@ -2,18 +2,20 @@
 use Log\ConsoleWrite; 
 
 $servername = "localhost";
-$username = "admin";
-$password = "vivwSHXSLLF9PwGe";
+$username = "fh_2020_scm4";
+$password = "fh_2020_scm4";
 
 
 try {
-        $conn = new PDO("mysql:host=$servername", $username, $password);
+        $conn = new PDO('mysql:host=localhost;dbname=fh_2020_scm4_S1810307037', $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "CREATE DATABASE fh_scm4_bookshop";
-        // use exec() because no results are returned
-        $conn->exec($sql);
-        ConsoleWrite::writeToConsole("Database created successfully<br>"); 
+        $sql = "SELECT * FROM role ORDER BY id DESC";
+        foreach ($conn->query($sql) as $row) {
+           echo $row['name']."<br />";
+           echo $row['bitCode']."<br />";
+        }        
+    
     }
 catch(PDOException $e)
     {
