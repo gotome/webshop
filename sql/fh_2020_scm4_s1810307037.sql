@@ -17,22 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-/* Drop Database and User */
+/* Drop Database */
 DROP DATABASE IF EXISTS fh_2020_scm4_S1810307037; 
-DROP USER IF EXISTS 'fh_2020_scm4'@'localhost'; 
 COMMIT; 
 
-/* Create Database and User */
+/* Create Database */
 CREATE DATABASE IF NOT EXISTS fh_2020_scm4_S1810307037 CHARACTER SET utf8; 
-COMMIT; 
-CREATE USER IF NOT EXISTS 'fh_2020_scm4'@'localhost' IDENTIFIED BY 'fh_2020_scm4'; 
-COMMIT; 
-
-
-/* privileges */
-/*GRANT ALL PRIVILEGES ON fh_2020_scm4_S1810307037 . * TO 'fh_2020_scm4'@'localhost'; */
-GRANT ALL PRIVILEGES ON fh_2020_scm4_S1810307037.* TO 'fh_2020_scm4'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES; 
 COMMIT; 
 
 --
