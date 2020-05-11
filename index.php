@@ -1,6 +1,6 @@
 <?php
 require_once('inc/bootstrap.php');
-require_once('lib/Data/db.php'); 
+require_once('lib/Data/DataManager.php'); 
 
 $default_view = 'welcome';
 $view = $default_view;
