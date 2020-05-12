@@ -3,16 +3,11 @@
 namespace data; 
 use Log\ConsoleWrite; 
 
-
+/*
 class DataManager implements IDataManager {
 
 
-      /**
-   * get the User item by id
-   *
-   * @param integer $userId  uid of that user
-   * @return User | null
-   */
+
   public static function getUsers(int $userId) { // no return type, cos "null" is not a valid User
     $servername = "localhost";
     $username = "fh_2020_scm4";
@@ -42,3 +37,4 @@ class DataManager implements IDataManager {
 
 
 }
+*/

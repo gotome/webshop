@@ -1,13 +1,16 @@
 <?php require_once('views/partials/header.php'); ?>
+<?php  use Bookshop\AuthenticationManager; ?>
+
 <div class="page-header">
     <h2>Welcome</h2>
 </div>
 
-<p>SCM4 Bookshop</p>
+<p>webshop</p>
 
-<?php 
-$book = new Bookshop\Book(1, 1, "ein title", "ein autor", 12.45);
-print_r($book); ?>
-
+<?php
+    if (!AuthenticationManager::isAuthenticated()) {
+        require_once('views/login.php');
+    }
+?>
 <?php require_once('views/partials/footer.php'); ?>
 
