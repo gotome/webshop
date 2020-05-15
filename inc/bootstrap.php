@@ -14,5 +14,5 @@ spl_autoload_register(function ($class) {
 Bookshop\SessionContext::create();
 
 /* switch different DataManagers */
-$class = 'mock';
+$class = 'mysqlpdo';
 require_once(__DIR__ .'/../lib/Data/DataManager_'  . $class . '.php');
