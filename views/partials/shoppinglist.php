@@ -21,9 +21,11 @@
         <th>
             Status
         </th>
+        <!--
         <th>
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
         </th>
+        -->
     </tr>
     </thead>
     <tbody>

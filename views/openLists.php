@@ -20,5 +20,4 @@ require_once('views/partials/header.php'); ?>
     <?php endif; ?>
 <?php endif; ?>
 
-<?php require_once('views/partials/footer.php'); ?>
 
