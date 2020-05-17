@@ -22,7 +22,7 @@ class ShoppingList extends Entity {
     public function __construct(
         int $id, 
         int $ownerId, 
-        int $helperId, string $endDate, float $paidPrice, 
+        $helperId, string $endDate, $paidPrice, 
         string $state, string $name 
     ) {
             parent::__construct($id);
@@ -38,7 +38,7 @@ class ShoppingList extends Entity {
         return $this->ownerId;
     }
 
-    public function getHelperId() : int {
+    public function getHelperId() {
         return $this->helperId;
     }
 
@@ -46,7 +46,7 @@ class ShoppingList extends Entity {
         return $this->endDate;
     }
 
-    public function getPaidPrice() : float {
+    public function getPaidPrice() {
         return $this->paidPrice;
     }
 

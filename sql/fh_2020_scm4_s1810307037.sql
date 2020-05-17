@@ -88,7 +88,7 @@ insert into user (id, firstName, lastName, userName, passwordHash, deletedFlag) 
 
 CREATE TABLE `shoppinglist` (
   `id` int(11) NOT NULL,
-  `ownerId` int(11) DEFAULT NULL,
+  `ownerId` int(11) NOT NULL,
   `helperId` int(11) DEFAULT NULL,
   `endDate` date NOT NULL,
   `paidPrice` decimal(6,2),

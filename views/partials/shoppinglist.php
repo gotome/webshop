@@ -1,4 +1,4 @@
-<?php use Webshop\Util, Webshop\ShoppingCart; ?>
+<?php use Webshop\Util, Data\DataManager; ?>
 
 <table class="table">
     <thead>
@@ -36,17 +36,24 @@
                     <?php echo Util::escape($openList->getName()); ?>
                 </strong>
             </td>
-            <td>
-                <?php echo Util::escape($openList->getOwnerId()); ?>
+            <td>                
+                <?php 
+                    $name = DataManager::getUserById($openList->getOwnerId()); 
+                    echo Util::escape(is_null($name) ? "" : $name->getUserName());
+                ?>
             </td>
             <td>
-                <?php echo Util::escape($openList->getHelperId()); ?>
+                <?php 
+                    $helperId = $openList->getHelperId(); 
+                    $name = DataManager::getUserById(is_null($helperId) ? -1 : $helperId); 
+                    echo Util::escape(is_null($name) ? "" : $name->getUserName());
+                ?>
             </td>    
             <td>
                 <?php echo Util::escape($openList->getEndDate()); ?>
             </td>    
             <td>
-                <?php echo Util::escape($openList->getPaidPrice()); ?>
+                <?php echo Util::escape(is_null($openList->getPaidPrice()) ? "" : $openList->getPaidPrice()); ?>
             </td>    
             <td>
                 <?php echo Util::escape($openList->getState()); ?>

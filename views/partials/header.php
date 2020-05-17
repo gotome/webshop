@@ -45,7 +45,7 @@ if (isset($_GET['errors'])) {
                 <ul class="nav navbar-nav">
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>
                     <li <?php if ($view === 'list') { ?>class="active" <?php } ?>><a href="index.php?view=list">Einkauf erstellen</a></li>
-                    <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Einkauf übernehmen</a></li>
+                    <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>
                     <li <?php if ($view === 'checkout') { ?>class="active" <?php } ?>><a href="index.php?view=checkout">Checkout</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right login">
