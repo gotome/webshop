@@ -118,6 +118,7 @@ class DataManager implements IDataManager
      * @param integer $categoryId numeric id of the category
      * @return array of Book-items
      */
+    /*
     public static function getBooksByCategory(int $categoryId): array
     {
         $books = [];
@@ -134,10 +135,8 @@ class DataManager implements IDataManager
         self::close($res);
         self::closeConnection();
         return $books;
-
-
     }
-
+*/
     /**
      * get the books per search term
      *
@@ -152,6 +151,7 @@ class DataManager implements IDataManager
      * @param string $term search term: book title string match
      * @return array of Book-items
      */
+    /*
     public static function getBooksForSearchCriteria(string $term): array
     {
         $books = [];
@@ -169,7 +169,7 @@ class DataManager implements IDataManager
         return $books;
 
     }
-
+*/
     /**
      * get the books per search term – paginated set only
      *
@@ -178,6 +178,7 @@ class DataManager implements IDataManager
      * @param integer $numPerPage  number of items per page
      * @return array of Book-items
      */
+    /*
     public static function getBooksForSearchCriteriaWithPaging($term, $offset, $numPerPage) {
         $con = self::getConnection();
         //query total count
@@ -203,7 +204,7 @@ class DataManager implements IDataManager
         self::closeConnection($con);
         return new PagingResult($books, $offset, $totalCount);
     }
-
+*/
     /**
      * get the User item by id
      *
@@ -220,7 +221,11 @@ class DataManager implements IDataManager
             WHERE id = ?;
         ", [$userId]);
         if ($u = self::fetchObject($res)) {
-            $user = new User($u->id, $u->userName, $u->passwordHash);
+            $user = new User($u->id, 
+                $u->firstName, $u->lastName, 
+                $u->userName, $u->passwordHash, 
+                $u->Role, $u->deletedFlag
+            );
         }
         self::close($res);
         self::closeConnection($con);
@@ -246,7 +251,11 @@ class DataManager implements IDataManager
             WHERE userName = ?;
         ", [$userName]);
         if ($u = self::fetchObject($res)) {
-            $user = new User($u->id, $u->userName, $u->passwordHash);
+            $user = new User($u->id, 
+            $u->firstName, $u->lastName, 
+            $u->userName, $u->passwordHash, 
+            $u->Role, $u->deletedFlag
+        );
         }
         self::close($res);
         self::closeConnection($con);
@@ -265,6 +274,7 @@ class DataManager implements IDataManager
      * @param string $cardNumber cc number
      * @return integer
      */
+    /*
     public static function createOrder(int $userId, array $bookIds, string $nameOnCard, string $cardNumber): int
     {
         $con = self::getConnection();
@@ -302,4 +312,5 @@ class DataManager implements IDataManager
         return $orderId;
 
     }
+    */
 }

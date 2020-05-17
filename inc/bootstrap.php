@@ -11,8 +11,8 @@ spl_autoload_register(function ($class) {
 });
 
 // create session context
-Bookshop\SessionContext::create();
+Webshop\SessionContext::create();
 
 /* switch different DataManagers */
-$class = 'mysqlpdo';
+$class = '';
 require_once(__DIR__ .'/../lib/Data/DataManager_'  . $class . '.php');
