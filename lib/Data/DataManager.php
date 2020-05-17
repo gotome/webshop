@@ -2,11 +2,14 @@
 
 namespace Data;
 
+use Log\ConsoleWrite;
+use Log\Log;
 use Webshop\Category;
 use Webshop\Book;
 use Webshop\User;
 use Webshop\PagingResult;
 use Webshop\ShoppingList;
+
 
 class DataManager implements IDataManager
 {
@@ -96,20 +99,18 @@ class DataManager implements IDataManager
         $resultList = [];
         $con = self::getConnection();
         $res = self::query($con, "
-            SELECT id, name 
+            SELECT id, ownerId, helperId, endDate, paidPrice, state, name
             FROM shoppinglist
             WHERE state = 'new';
         ");
-
         while ($cat = self::fetchObject($res)) {
             $resultList[] = new ShoppingList($cat->id, $cat->ownerId, 
-                $cat->ownerId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
+                $cat->helperId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
             );
         }
         self::close($res);
         self::closeConnection();
         return $resultList;
-
     }
 
     /**
@@ -216,17 +217,18 @@ class DataManager implements IDataManager
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
-            SELECT id, userName, passwordHash 
-            FROM users 
+            SELECT id, firstName, lastName, userName, passwordHash, deletedFlag
+            FROM user
             WHERE id = ?;
         ", [$userId]);
         if ($u = self::fetchObject($res)) {
             $user = new User($u->id, 
                 $u->firstName, $u->lastName, 
                 $u->userName, $u->passwordHash, 
-                $u->Role, $u->deletedFlag
+                $u->deletedFlag
             );
         }
+        
         self::close($res);
         self::closeConnection($con);
         return $user;
@@ -246,8 +248,8 @@ class DataManager implements IDataManager
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
-            SELECT id, userName, passwordHash 
-            FROM users 
+            SELECT id, firstName, lastName, userName, passwordHash, deletedFlag
+            FROM user
             WHERE userName = ?;
         ", [$userName]);
         if ($u = self::fetchObject($res)) {

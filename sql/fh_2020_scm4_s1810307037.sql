@@ -70,15 +70,15 @@ CREATE TABLE `user` (
   `firstName` varchar(25) NOT NULL,
   `lastName` varchar(25) NOT NULL,
   `userName` varchar(25) NOT NULL,
-  `password` varchar(250) NOT NULL,
+  `passwordHash` varchar(250) NOT NULL,
   `deletedFlag` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- MOCKDATA user table
 --
-insert into user (id, firstName, lastName, userName, password, deletedFlag) VALUES (1, 'Gerald', 'Riess', 'Hilfesuchender', '2216d6cdd869e0cbdd4a51f74e17e1ba7150db5f', false);
-insert into user (id, firstName, lastName, userName, password, deletedFlag) VALUES (2, 'Manuel', 'Strasser', 'Freiwilliger', '4b35ad500817192730ce10a1335b469372cd92fd', false);
+insert into user (id, firstName, lastName, userName, passwordHash, deletedFlag) VALUES (1, 'Gerald', 'Riess', 'Hilfesuchender', '2216d6cdd869e0cbdd4a51f74e17e1ba7150db5f', false);
+insert into user (id, firstName, lastName, userName, passwordHash, deletedFlag) VALUES (2, 'Manuel', 'Strasser', 'Freiwilliger', '4b35ad500817192730ce10a1335b469372cd92fd', false);
 
 -- --------------------------------------------------------
 
@@ -99,8 +99,8 @@ CREATE TABLE `shoppinglist` (
 --
 -- MOCKDATA shopping list table
 --
-insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (1, 1, 2, '2/3/2020', 46.55, 'not published', 'Cookley');
-insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (2, 1, 2, '1/3/2020', 38.67, 'new', 'Sub-Ex');
+insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (1, 1, NULL, '2/3/2020', 46.55, 'not published', 'Cookley');
+insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (2, 1, NULL, '1/3/2020', 38.67, 'new', 'Sub-Ex');
 insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (3, 1, 2, '2/13/2020', 23.87, 'processing', 'Stringtough');
 insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (4, 1, 2, '1/29/2020', 55.35, 'done', 'Job');
 

@@ -15,4 +15,4 @@ Webshop\SessionContext::create();
 
 /* switch different DataManagers */
 $class = '';
-require_once(__DIR__ .'/../lib/Data/DataManager_'  . $class . '.php');
+require_once(__DIR__ .'/../lib/Data/DataManager'  . $class . '.php');

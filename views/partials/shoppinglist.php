@@ -16,7 +16,7 @@
             Enddatum
         </th>
         <th>
-            Maximalpreis
+            Bezahlter Preis
         </th>
         <th>
             Status
@@ -29,38 +29,27 @@
     <tbody>
     <?php
     foreach ($openLists as $openList):
-        $inCart = ShoppingCart::contains($openList->getId());
         ?>
         <tr>
             <td><strong>
-                    <?php echo Util::escape($openList->getTitle()); ?>
+                    <?php echo Util::escape($openList->getName()); ?>
                 </strong>
             </td>
             <td>
-                <?php echo Util::escape($openList->getAuthor()); ?>
+                <?php echo Util::escape($openList->getOwnerId()); ?>
             </td>
             <td>
-                <?php // echo money_format('%i', Util::escape($openList->getPrice()));
-                echo Util::escape($openList->getPrice());
-                ?>
-            </td>
-            <td class="add-remove">
-                <?php  if ($inCart): ?>
-                    <form method="post" action="<?php echo Util::action
-                    (Webshop\Controller::ACTION_REMOVE, array('openListId' => $openList->getId())); ?>">
-                    <button type="submit" role="button" class="btn btn-default btn-xs btn-info">
-                        <span class="glyphicon glyphicon-minus"></span>
-                    </button>
-                    </form>
-                <?php else: ?>
-                    <form method="post" action="<?php echo Util::action
-                     (Webshop\Controller::ACTION_ADD, array('openListId' => $openList->getId())); ?>">
-                        <button type="submit" role="button" class="btn btn-default btn-xs btn-success">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </form>
-                <?php endif;  ?>
-            </td>
+                <?php echo Util::escape($openList->getHelperId()); ?>
+            </td>    
+            <td>
+                <?php echo Util::escape($openList->getEndDate()); ?>
+            </td>    
+            <td>
+                <?php echo Util::escape($openList->getPaidPrice()); ?>
+            </td>    
+            <td>
+                <?php echo Util::escape($openList->getState()); ?>
+            </td>    
         </tr>
     <?php endforeach; ?>
     </tbody>

@@ -2,8 +2,7 @@
 
 use Data\DataManager;
 
-$openLists = (isset($categoryId) && ((int) $categoryId > 0)) ? DataManager::getOpenShoppingLists() : null;
-
+$openLists = DataManager::getOpenShoppingLists();
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">

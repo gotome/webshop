@@ -11,9 +11,9 @@ if (isset($_REQUEST['view']) &&
     }
 
 /* if we have a form post, invoke the controller */
-$postAction = $_REQUEST[Bookshop\Controller::ACTION] ?? null;
+$postAction = $_REQUEST[Webshop\Controller::ACTION] ?? null;
 if ($postAction != null)
-    Bookshop\Controller::getInstance()->invokePostAction();
+    Webshop\Controller::getInstance()->invokePostAction();
 
 require_once('views/' . $view . '.php');
 
