@@ -22,15 +22,16 @@ class Article extends Entity {
     public function __construct(
         int $id, 
         int $shoppingListId, 
-        string $description, int $amount, float $highestPrice
+        string $description, int $amount, float $highestPrice, 
+        bool $deletedFlag, bool $doneFlag
     ) {
             parent::__construct($id);
             $this->shoppingListId = $shoppingListId;
             $this->description = $description;
             $this->amount = $amount; 
             $this->highestPrice = $highestPrice;
-            $this->deletedFlag = false;
-            $this->doneFlag = false;
+            $this->deletedFlag = $deletedFlag;
+            $this->doneFlag = $doneFlag;
     }
 
     public function getShoppingListId() : int {

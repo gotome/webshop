@@ -31,7 +31,8 @@
     foreach ($openLists as $openList):
         ?>
         <tr>
-            <td><strong>
+            <td>
+                <strong>
                     <?php echo Util::escape($openList->getName()); ?>
                 </strong>
             </td>

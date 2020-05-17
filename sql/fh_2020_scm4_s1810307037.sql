@@ -91,7 +91,7 @@ CREATE TABLE `shoppinglist` (
   `ownerId` int(11) DEFAULT NULL,
   `helperId` int(11) DEFAULT NULL,
   `endDate` date NOT NULL,
-  `paidPrice` decimal(6,2) NOT NULL,
+  `paidPrice` decimal(6,2),
   `state` enum('not published','new','processing','done') NOT NULL,
   `name` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -22,14 +22,14 @@ class User extends Entity {
   public function __construct(
     int $id, 
     string $firstName, string $lastName, string $userName, 
-    string $passwordHash
+    string $passwordHash, bool $deletedFlag
   ) {
       parent::__construct($id);
       $this->firstName = $firstName; 
       $this->lastName = $lastName; 
       $this->userName = $userName;
       $this->passwordHash = $passwordHash;
-      $this->deletedFlag = false; 
+      $this->deletedFlag = $deletedFlag; 
   }
 
   /**
