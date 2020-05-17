@@ -1,11 +1,12 @@
 <?php require_once('views/partials/header.php'); ?>
-<?php  use Bookshop\AuthenticationManager; ?>
+<?php  use Webshop\AuthenticationManager; ?>
 
+<!--
 <div class="page-header">
     <h2>Welcome</h2>
 </div>
-
 <p>webshop</p>
+-->
 
 <?php
     if (!AuthenticationManager::isAuthenticated()) {

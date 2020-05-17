@@ -1,6 +1,6 @@
 <?php
 
-use Bookshop\Util, Bookshop\AuthenticationManager, Bookshop\ShoppingCart;
+use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart;
 
 $user = AuthenticationManager::getAuthenticatedUser();
 $cartSize = ShoppingCart::size();
@@ -72,7 +72,7 @@ if (isset($_GET['errors'])) {
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="centered">
-                                    <form method="post" action="<?php echo Util::action(Bookshop\Controller::ACTION_LOGOUT); ?>">
+                                    <form method="post" action="<?php echo Util::action(Webshop\Controller::ACTION_LOGOUT); ?>">
                                         <input class="btn btn-xs" role="button" type="submit" value="Logout" />
                                     </form>
                                 </li>

@@ -9,7 +9,7 @@ require_once ('views/partials/header.php');
     <p>Thank you for your order</p>
 
     <?php if ($orderId != null) { ?>
-    <p>Your order number: <?php echo \Bookshop\Util::escape($orderId); ?></p>
+    <p>Your order number: <?php echo \Webshop\Util::escape($orderId); ?></p>
 
     <?php } ?>
 </div>

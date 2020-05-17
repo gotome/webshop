@@ -1,11 +1,11 @@
 <?php
 
-use Bookshop\AuthenticationManager, Bookshop\Util;
+use Webshop\AuthenticationManager, Webshop\Util;
 
 if (AuthenticationManager::isAuthenticated()) {
     Util::redirect('index.php');
 }
-$userName = $_REQUEST[Bookshop\Controller::USER_NAME] ?? null;
+$userName = $_REQUEST[Webshop\Controller::USER_NAME] ?? null;
 
 require_once('views/partials/header.php');
 ?>
@@ -20,17 +20,17 @@ require_once('views/partials/header.php');
     </div>
     <div class="panel-body">
 
-        <form class="form-horizontal" method="post" action="<?php echo Util::action(Bookshop\Controller::ACTION_LOGIN, array('view' => $view)); ?>">
+        <form class="form-horizontal" method="post" action="<?php echo Util::action(Webshop\Controller::ACTION_LOGIN, array('view' => $view)); ?>">
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">User name:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputName" name="<?php print Bookshop\Controller::USER_NAME; ?>" placeholder="try 'Hilfesuchender'" value="<?php echo htmlentities($userName); ?>">
+                    <input type="text" class="form-control" id="inputName" name="<?php print Webshop\Controller::USER_NAME; ?>" placeholder="try 'Hilfesuchender'" value="<?php echo htmlentities($userName); ?>">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputPassword" name="<?php print Bookshop\Controller::USER_PASSWORD; ?>" placeholder="try 'Hilfesuchender'">
+                    <input type="password" class="form-control" id="inputPassword" name="<?php print Webshop\Controller::USER_PASSWORD; ?>" placeholder="try 'Hilfesuchender'">
                 </div>
             </div>
             <div class="form-group">

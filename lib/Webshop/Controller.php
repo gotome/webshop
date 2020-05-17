@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Bookshop;
+namespace Webshop;
 
 
 class Controller extends BaseObject

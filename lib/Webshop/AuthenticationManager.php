@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Bookshop;
+namespace Webshop;
 
 SessionContext::create();
 

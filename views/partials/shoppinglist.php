@@ -4,13 +4,22 @@
     <thead>
     <tr>
         <th>
-            Title
+            Name
         </th>
         <th>
-            Author
+            Hilfesuchender
         </th>
         <th>
-            Price
+            Freiwilliger
+        </th>
+        <th>
+            Enddatum
+        </th>
+        <th>
+            Maximalpreis
+        </th>
+        <th>
+            Status
         </th>
         <th>
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
