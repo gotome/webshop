@@ -1,8 +1,9 @@
 <?php
 
-use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart;
+use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart, Webshop\RoleType;
 
 $user = AuthenticationManager::getAuthenticatedUser();
+//var_dump("user: ", $user); 
 $cartSize = ShoppingCart::size();
 
 if (isset($_GET['errors'])) {
@@ -44,9 +45,10 @@ if (isset($_GET['errors'])) {
             <div class="navbar-collapse collapse" id="bs-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>
-                    <li <?php if ($view === 'list') { ?>class="active" <?php } ?>><a href="index.php?view=list">Einkauf erstellen</a></li>
-                    <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>
-                    <li <?php if ($view === 'checkout') { ?>class="active" <?php } ?>><a href="index.php?view=checkout">Checkout</a></li>
+                    
+                        <?php  if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
+                            <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>                    
+                        <?php  } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right login">
                     <li>

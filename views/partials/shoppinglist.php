@@ -1,6 +1,6 @@
 <?php use Webshop\Util, Data\DataManager; ?>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
     <tr>
         <th>

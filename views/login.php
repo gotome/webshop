@@ -24,13 +24,13 @@ require_once('views/partials/header.php');
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">User name:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputName" name="<?php print Webshop\Controller::USER_NAME; ?>" placeholder="try 'Hilfesuchender'" value="<?php echo htmlentities($userName); ?>">
+                    <input type="text" class="form-control" id="inputName" name="<?php print Webshop\Controller::USER_NAME; ?>" placeholder="my username" value="<?php echo htmlentities($userName); ?>">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputPassword" name="<?php print Webshop\Controller::USER_PASSWORD; ?>" placeholder="try 'Hilfesuchender'">
+                    <input type="password" class="form-control" id="inputPassword" name="<?php print Webshop\Controller::USER_PASSWORD; ?>" placeholder="my password">
                 </div>
             </div>
             <div class="form-group">

@@ -70,6 +70,7 @@ CREATE TABLE `user` (
   `firstName` varchar(25) NOT NULL,
   `lastName` varchar(25) NOT NULL,
   `userName` varchar(25) NOT NULL,
+  `roleId` bit(7) NOT NULL,
   `passwordHash` varchar(250) NOT NULL,
   `deletedFlag` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -77,8 +78,8 @@ CREATE TABLE `user` (
 --
 -- MOCKDATA user table
 --
-insert into user (id, firstName, lastName, userName, passwordHash, deletedFlag) VALUES (1, 'Gerald', 'Riess', 'Hilfesuchender', '2216d6cdd869e0cbdd4a51f74e17e1ba7150db5f', false);
-insert into user (id, firstName, lastName, userName, passwordHash, deletedFlag) VALUES (2, 'Manuel', 'Strasser', 'Freiwilliger', '4b35ad500817192730ce10a1335b469372cd92fd', false);
+insert into user (id, firstName, lastName, userName, roleId, passwordHash, deletedFlag) VALUES (1, 'Gerald', 'Riess', 'Hilfesuchender', 2,'2216d6cdd869e0cbdd4a51f74e17e1ba7150db5f', false);
+insert into user (id, firstName, lastName, userName, roleId, passwordHash, deletedFlag) VALUES (2, 'Manuel', 'Strasser', 'Freiwilliger', 3,'4b35ad500817192730ce10a1335b469372cd92fd', false);
 
 -- --------------------------------------------------------
 
@@ -125,11 +126,11 @@ insert into article (id, shoppingListId, description, amount, highestPrice, dele
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (2, 1, 'Pork - Tenderloin, Frozen', 2, 18.2, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (3, 1, 'Shrimp - 16 - 20 Cooked, Peeled', 3, 3.4, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (4, 1, 'Yogurt - French Vanilla', 4, 35.5, false, false);
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (5, 2, 'Wine - White, Chardonnay', 5, 33.52, false, false);
+/*insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (5, 2, 'Wine - White, Chardonnay', 5, 33.52, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (6, 2, 'Cranberries - Fresh', 6, 24.23, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (7, 2, 'Potatoes - Fingerling 4 Oz', 7, 89.12, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (8, 2, 'Pepper - Sorrano', 8, 97.65, false, false);
-/*
+
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (9, 3, 'Scampi Tail', 9, 57.11, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (10, 3, 'Coriander', 10, 89.23, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (11, 3, 'Cheese', 11, 38.78, false, false);
@@ -151,8 +152,8 @@ ALTER TABLE `article`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `name` (`name`),
-  ADD KEY `bitCode` (`bitCode`);
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `bitCode` (`bitCode`);
 
 --
 -- Indizes für die Tabelle `shoppinglist`
@@ -166,7 +167,9 @@ ALTER TABLE `shoppinglist`
 -- Indizes für die Tabelle `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`), 
+  ADD UNIQUE KEY `userName` (`userName`),
+  ADD KEY `roleId` (`roleId`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -193,6 +196,12 @@ ALTER TABLE `user`
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_role_FK1` FOREIGN KEY (`id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `article`

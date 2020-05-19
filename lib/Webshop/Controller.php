@@ -2,7 +2,7 @@
 
 
 namespace Webshop;
-
+use Log\ConsoleWrite; 
 
 class Controller extends BaseObject
 {
@@ -55,6 +55,7 @@ class Controller extends BaseObject
                 Util::redirect();
                 break;
             case self::ACTION_LOGIN :
+                ConsoleWrite::writeToConsole("Hello", $_REQUEST[self::USER_NAME]);   
                 if (!AuthenticationManager::authenticate($_REQUEST[self::USER_NAME], $_REQUEST[self::USER_PASSWORD])) {
                     $this->forwardRequest(array('Invalid user name or password.'));
                 }

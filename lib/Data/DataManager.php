@@ -214,18 +214,19 @@ class DataManager implements IDataManager
      */
     public static function getUserById(int $userId)
     { // no return type, cos "null" is not a valid User
+        var_dump($userId);
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
-            SELECT id, firstName, lastName, userName, passwordHash, deletedFlag
-            FROM user
-            WHERE id = ?;
+            SELECT *
+            FROM user INNER JOIN role ON user.roleId = role.id
+            WHERE user.id = ?;
         ", [$userId]);
         if ($u = self::fetchObject($res)) {
             $user = new User($u->id, 
                 $u->firstName, $u->lastName, 
                 $u->userName, $u->passwordHash, 
-                $u->deletedFlag
+                $u->bitCode, $u->deletedFlag
             );
         }
         
@@ -248,15 +249,15 @@ class DataManager implements IDataManager
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
-            SELECT id, firstName, lastName, userName, passwordHash, deletedFlag
-            FROM user
-            WHERE userName = ?;
+            SELECT *
+            FROM user INNER JOIN role ON user.roleId = role.id
+            WHERE user.userName = ?;
         ", [$userName]);
         if ($u = self::fetchObject($res)) {
             $user = new User($u->id, 
             $u->firstName, $u->lastName, 
             $u->userName, $u->passwordHash, 
-            $u->Role, $u->deletedFlag
+            $u->roleId, $u->deletedFlag
         );
         }
         self::close($res);

@@ -12,7 +12,7 @@ namespace Webshop;
  */
 class RoleType
 {
-    public int $helpSeeker = 1;
-    public int $helper = 2;
-    public int $admin = 127;
+    public static int $HELPSEEKER = 1;
+    public static int $HELPER = 2;
+    //public static int $ADMIN = 127;
 }

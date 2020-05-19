@@ -18,17 +18,19 @@ class User extends Entity {
   private $userName;
   private $passwordHash;
   private $deletedFlag;
+  private $role; 
 
   public function __construct(
     int $id, 
     string $firstName, string $lastName, string $userName, 
-    string $passwordHash, bool $deletedFlag
+    string $passwordHash, int $role, bool $deletedFlag
   ) {
       parent::__construct($id);
       $this->firstName = $firstName; 
       $this->lastName = $lastName; 
       $this->userName = $userName;
       $this->passwordHash = $passwordHash;
+      $this->role = $role;
       $this->deletedFlag = $deletedFlag; 
   }
 
@@ -76,5 +78,15 @@ class User extends Entity {
   public function getDeletedFlag() : bool {
     return $this->deletedFlag;
   }
+
+  /**
+   * getter for the private parameter $hasRole
+   *
+   * @return string
+   */
+  public function hasRole(int $bitCode) : bool {
+    return $this->role && $bitCode;
+  }
+
 
 }
