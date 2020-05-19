@@ -11,7 +11,6 @@ class AuthenticationManager extends BaseObject
 
         $user = \Data\DataManager::getUserByUserName($userName);
         ConsoleWrite::writeToConsole($user);  
-        var_dump($userName); 
         if ($user != null && $user->getPasswordHash() == hash('sha1', $userName . '|' . $password)) {
             $_SESSION['user'] = $user->getId();
             return true;

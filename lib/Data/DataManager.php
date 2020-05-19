@@ -214,7 +214,6 @@ class DataManager implements IDataManager
      */
     public static function getUserById(int $userId)
     { // no return type, cos "null" is not a valid User
-        var_dump($userId);
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
@@ -244,8 +243,7 @@ class DataManager implements IDataManager
      * @return User | null
      */
     public static function getUserByUserName(string $userName)
-    {
-
+    { 
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
