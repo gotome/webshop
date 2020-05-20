@@ -218,7 +218,7 @@ class DataManager implements IDataManager
         $con = self::getConnection();
         $res = self::query($con, " 
             SELECT *
-            FROM user INNER JOIN role ON user.roleId = role.id
+            FROM user INNER JOIN role ON user.id = role.id
             WHERE user.id = ?;
         ", [$userId]);
         if ($u = self::fetchObject($res)) {
@@ -248,7 +248,7 @@ class DataManager implements IDataManager
         $con = self::getConnection();
         $res = self::query($con, " 
             SELECT *
-            FROM user INNER JOIN role ON user.roleId = role.id
+            FROM user INNER JOIN role ON user.id = role.id
             WHERE user.userName = ?;
         ", [$userName]);
         if ($u = self::fetchObject($res)) {

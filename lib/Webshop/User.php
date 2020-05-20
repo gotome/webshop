@@ -25,6 +25,7 @@ class User extends Entity {
     string $firstName, string $lastName, string $userName, 
     string $passwordHash, int $role, bool $deletedFlag
   ) {
+      var_dump($firstName); 
       parent::__construct($id);
       $this->firstName = $firstName; 
       $this->lastName = $lastName; 
@@ -85,8 +86,6 @@ class User extends Entity {
    * @return string
    */
   public function hasRole(int $bitCode) : bool {
-    return $this->role && $bitCode;
+    return $this->role & $bitCode;
   }
-
-
 }
