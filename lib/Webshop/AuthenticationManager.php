@@ -10,7 +10,7 @@ class AuthenticationManager extends BaseObject
     public static function authenticate(string $userName, string $password) : bool {
 
         $user = \Data\DataManager::getUserByUserName($userName);
-        ConsoleWrite::writeToConsole($user);  
+        ConsoleWrite::writeToConsole($userName);  
         if ($user != null && $user->getPasswordHash() == hash('sha1', $userName . '|' . $password)) {
             $_SESSION['user'] = $user->getId();
             return true;
