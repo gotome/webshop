@@ -1,8 +1,8 @@
 <?php
 
 
-namespace Bookshop;
-
+namespace Webshop;
+use Log\ConsoleWrite; 
 
 class Controller extends BaseObject
 {

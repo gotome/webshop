@@ -1,8 +1,8 @@
 <?php
 
 
-namespace Bookshop;
-
+namespace Webshop;
+use Log\ConsoleWrite; 
 SessionContext::create();
 
 class AuthenticationManager extends BaseObject

@@ -2,9 +2,7 @@
 
 use Webshop\AuthenticationManager, Webshop\Util;
 
-if (AuthenticationManager::isAuthenticated()) {
-    Util::redirect('index.php');
-}
+
 $userName = $_REQUEST[Webshop\Controller::USER_NAME] ?? null;
 
 require_once('views/partials/header.php');
@@ -44,9 +42,3 @@ require_once('views/partials/header.php');
 </div>
 
 
-
-
-
-<?php
-require_once('views/partials/footer.php');
-?>

@@ -1,7 +1,6 @@
 <?php
 
-use Bookshop\Util, Bookshop\AuthenticationManager, Bookshop\ShoppingCart;
-
+use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart, Webshop\RoleType;
 $user = AuthenticationManager::getAuthenticatedUser();
 $cartSize = ShoppingCart::size();
 
@@ -44,15 +43,12 @@ if (isset($_GET['errors'])) {
             <div class="navbar-collapse collapse" id="bs-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>
-                    <li <?php if ($view === 'list') { ?>class="active" <?php } ?>><a href="index.php?view=list">Einkauf erstellen</a></li>
-                    <li <?php if ($view === 'search') { ?>class="active" <?php } ?>><a href="index.php?view=search">Einkauf übernehmen</a></li>
-                    <li <?php if ($view === 'checkout') { ?>class="active" <?php } ?>><a href="index.php?view=checkout">Checkout</a></li>
+
+                        <?php  if (AuthenticationManager::isAuthenticated()) {  //if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
+                            <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>                
+                        <?php  } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right login">
-                    <li>
-                        <a href="index.php?view=checkout">
-                            <span class="badge"><?php echo Util::escape($cartSize); ?></span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                    </li>
                     <li class="dropdown">
                         <?php if ($user == null) : ?>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -72,7 +68,7 @@ if (isset($_GET['errors'])) {
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="centered">
-                                    <form method="post" action="<?php echo Util::action(Bookshop\Controller::ACTION_LOGOUT); ?>">
+                                    <form method="post" action="<?php echo Util::action(Webshop\Controller::ACTION_LOGOUT); ?>">
                                         <input class="btn btn-xs" role="button" type="submit" value="Logout" />
                                     </form>
                                 </li>

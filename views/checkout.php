@@ -1,6 +1,6 @@
 <?php
 
-use Bookshop\ShoppingCart, Bookshop\Util, Bookshop\AuthenticationManager, Bookshop\Controller;
+use Webshop\ShoppingCart, Webshop\Util, Webshop\AuthenticationManager, Webshop\Controller;
 require_once('views/partials/header.php');
 
 $nameOnCard = $_REQUEST[Controller::CC_NAME] ?? null;
@@ -25,17 +25,17 @@ $cardNumber = $_REQUEST[Controller::CC_NUMBER] ?? null;
             </div>
             <div class="panel-body">
 
-                <form class="form-horizontal" method="post" action="<?php echo Util::action(Bookshop\Controller::ACTION_ORDER); ?>">
+                <form class="form-horizontal" method="post" action="<?php echo Util::action(Webshop\Controller::ACTION_ORDER); ?>">
                     <div class="form-group">
                         <label for="nameOnCard" class="col-sm-4 control-label">Name on card:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="nameOnCard" name="<?php print Bookshop\Controller::CC_NAME; ?>" placeholder="Your name please!" value="<?php echo htmlentities($nameOnCard); ?>">
+                            <input type="text" class="form-control" id="nameOnCard" name="<?php print Webshop\Controller::CC_NAME; ?>" placeholder="Your name please!" value="<?php echo htmlentities($nameOnCard); ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="cardNumber" class="col-sm-4 control-label">Card Number:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="cardNumber" name="<?php print Bookshop\Controller::CC_NUMBER; ?>" placeholder="try '1234567891234567'" value="<?php echo htmlentities($cardNumber); ?>">
+                            <input type="text" class="form-control" id="cardNumber" name="<?php print Webshop\Controller::CC_NUMBER; ?>" placeholder="try '1234567891234567'" value="<?php echo htmlentities($cardNumber); ?>">
                         </div>
                     </div>
                     <div class="form-group">

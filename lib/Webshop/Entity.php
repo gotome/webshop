@@ -1,5 +1,5 @@
 <?php
-namespace Bookshop;
+namespace Webshop;
 
 interface IData {
     public function getId() : int;
