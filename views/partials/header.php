@@ -1,7 +1,6 @@
 <?php
 
 use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart, Webshop\RoleType;
-
 $user = AuthenticationManager::getAuthenticatedUser();
 $cartSize = ShoppingCart::size();
 
@@ -45,15 +44,11 @@ if (isset($_GET['errors'])) {
                 <ul class="nav navbar-nav">
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>
 
-                        <?php  if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
-                            <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>                    
+                        <?php  if (AuthenticationManager::isAuthenticated()) {  //if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
+                            <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>                
                         <?php  } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right login">
-                    <li>
-                        <a href="index.php?view=checkout">
-                            <span class="badge"><?php echo Util::escape($cartSize); ?></span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                    </li>
                     <li class="dropdown">
                         <?php if ($user == null) : ?>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

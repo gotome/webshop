@@ -6,7 +6,7 @@ $openLists = DataManager::getOpenShoppingLists();
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
-    <h2>Offene Listen</h2>
+    <h2>Alle offenen Listen</h2>
 </div>  
 
     

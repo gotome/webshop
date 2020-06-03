@@ -1,4 +1,7 @@
-<?php use Webshop\Util, Data\DataManager; ?>
+<?php use Webshop\Util, Data\DataManager; 
+require_once('views/partials/header.php');
+
+?>
 
 <table class="table table-striped">
     <thead>
@@ -64,3 +67,6 @@
     <?php endforeach; ?>
     </tbody>
 </table>
+
+
+<?php require_once('views/partials/footer.php'); ?>

@@ -2,7 +2,7 @@
 
 <?php
 
-use Webshop\Util;
+use Webshop\Util, Webshop\AuthenticationManager;
 
 if (isset($errors) && is_array($errors)) : ?>
   <div class="errors alert alert-danger">
@@ -19,12 +19,14 @@ if (isset($errors) && is_array($errors)) : ?>
 <div class="footer">
 
   <!--display cart info-->
-  <hr />
-  <div class="col-sm-8">
-    <button class="btn btn-primary btn-xs" type="button">
-      <span class="badge"><?php echo Webshop\Util::escape($cartSize); ?></span> items in cart
-    </button>
-  </div>
+  <hr /> 
+  <?php if (AuthenticationManager::isAuthenticated()) { ?>
+    <div class="col-sm-8">
+      <button class="btn btn-primary btn-xs" type="button">
+        <span class="badge"><?php echo Webshop\Util::escape($cartSize); ?></span> offene Listen
+      </button>
+    </div>  
+  <?php } ?>
   <div class="col-sm-4 pull-right">
     <p><?php echo Webshop\Util::escape(strftime('%c')); ?></p>
   </div>

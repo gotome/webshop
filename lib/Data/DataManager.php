@@ -217,9 +217,9 @@ class DataManager implements IDataManager
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
-            SELECT *
-            FROM user INNER JOIN role ON user.id = role.id
-            WHERE user.id = ?;
+            SELECT u.id, u.firstName, u.lastName, u.userName, u.passwordHash, r.bitCode, u.deletedFlag
+            FROM user u JOIN role r ON u.roleId = r.id
+            WHERE u.id = ?;      
         ", [$userId]);
         if ($u = self::fetchObject($res)) {
             $user = new User($u->id, 
@@ -247,15 +247,15 @@ class DataManager implements IDataManager
         $user = null;
         $con = self::getConnection();
         $res = self::query($con, " 
-            SELECT *
-            FROM user INNER JOIN role ON user.id = role.id
-            WHERE user.userName = ?;
+            SELECT u.id, u.firstName, u.lastName, u.userName, u.passwordHash, r.bitCode, u.deletedFlag
+            FROM user u JOIN role r ON u.roleId = r.id
+            WHERE u.userName = ?;
         ", [$userName]);
         if ($u = self::fetchObject($res)) {
             $user = new User($u->id, 
             $u->firstName, $u->lastName, 
             $u->userName, $u->passwordHash, 
-            $u->roleId, $u->deletedFlag
+            $u->bitCode, $u->deletedFlag
         );
         }
         self::close($res);
