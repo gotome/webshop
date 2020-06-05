@@ -9,7 +9,7 @@ require_once('views/partials/header.php');
 ?>
 
 <div class="page-header">
-    <h2>Login</h2>
+    <h2>Einkaufsliste erstellen</h2>
 </div>
 
 <div class="panel panel-default">

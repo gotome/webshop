@@ -36,17 +36,25 @@ if (isset($_GET['errors'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand">Simple Shopping</a>
+                </button>                
+                
+                <a class="navbar-brand"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Simple Shopping</a>
             </div>
 
             <div class="navbar-collapse collapse" id="bs-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>
+                    <!-- help seeker -->
+                    <?php  if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
+                        <li <?php if ($view === 'createShoppingList') { ?>class="active" <?php } ?>><a href="index.php?view=createShoppingList">Neue Liste</a></li>                
+                    <?php  } ?>
+                    <!-- helper -->
 
-                        <?php  if (AuthenticationManager::isAuthenticated()) {  //if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
-                            <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>                
-                        <?php  } ?>
+                    <!-- authenticated -->
+                    <?php  if (AuthenticationManager::isAuthenticated()) {  //if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?>
+                        <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>                
+                    <?php  } ?>
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right login">
                     <li class="dropdown">

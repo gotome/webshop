@@ -10,7 +10,7 @@ class Controller extends BaseObject
     const PAGE = 'page';
     const CC_NAME = 'nameOnCard';
     const CC_NUMBER = 'cardNumber';
-    const ACTION_ADD = 'addToCart';
+    const ACTION_ADD_LIST = 'addList';
     const ACTION_REMOVE = 'removeFromCart';
     const ACTION_LOGIN = 'login';
     const ACTION_LOGOUT = 'logout';
@@ -46,8 +46,8 @@ class Controller extends BaseObject
 
 
         switch ($action) {
-            case self::ACTION_ADD :
-                ShoppingCart::add((int) $_REQUEST['bookId']);
+            case self::ACTION_ADD_LIST :                
+                //ShoppingCart::add((int) $_REQUEST['bookId']);
                 Util::redirect();
                 break;
             case self::ACTION_REMOVE :
@@ -56,7 +56,7 @@ class Controller extends BaseObject
                 break;
             case self::ACTION_LOGIN :
                 if (!AuthenticationManager::authenticate($_REQUEST[self::USER_NAME], $_REQUEST[self::USER_PASSWORD])) {
-                    $this->forwardRequest(array('Invalid user name or password.'));
+                    $this->forwardRequest(array('Falscher Beutzername oder Passwort'));
                 }
                 Util::redirect();
                 break;

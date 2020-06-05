@@ -1,16 +1,9 @@
 <?php require_once('views/partials/header.php'); ?>
-<?php  use Webshop\AuthenticationManager; ?>
-
-<!--
-<div class="page-header">
-    <h2>Welcome</h2>
-</div>
-<p>webshop</p>
--->
+<?php  use Webshop\AuthenticationManager, Webshop\Util;  ?>
 
 <?php
     if (!AuthenticationManager::isAuthenticated()) {
-        require_once('views/login.php');
+        Util::redirect('?view=login');
     }
 ?>
 <?php require_once('views/partials/footer.php'); ?>

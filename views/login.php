@@ -11,26 +11,26 @@ require_once('views/partials/header.php');
 ?>
 
 <div class="page-header">
-    <h2>Login</h2>
+    <h2>Authentifizierung</h2>
 </div>
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        Please fill out the form below:
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
     </div>
     <div class="panel-body">
 
         <form class="form-horizontal" method="post" action="<?php echo Util::action(Webshop\Controller::ACTION_LOGIN, array('view' => $view)); ?>">
             <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">User name:</label>
+                <label for="inputName" class="col-sm-2 control-label">Benutzername:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputName" name="<?php print Webshop\Controller::USER_NAME; ?>" placeholder="my username" value="<?php echo htmlentities($userName); ?>">
+                    <input type="text" class="form-control" id="inputName" name="<?php print Webshop\Controller::USER_NAME; ?>" placeholder="Benutzername" value="<?php echo htmlentities($userName); ?>">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <label for="inputPassword" class="col-sm-2 control-label">Passwort</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputPassword" name="<?php print Webshop\Controller::USER_PASSWORD; ?>" placeholder="my password">
+                    <input type="password" class="form-control" id="inputPassword" name="<?php print Webshop\Controller::USER_PASSWORD; ?>" placeholder="Passwort">
                 </div>
             </div>
             <div class="form-group">
@@ -42,9 +42,6 @@ require_once('views/partials/header.php');
 
     </div>
 </div>
-
-
-
 
 
 <?php
