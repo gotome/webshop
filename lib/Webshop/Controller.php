@@ -2,7 +2,8 @@
 
 
 namespace Webshop;
-use Log\ConsoleWrite; 
+use Log\Logger; 
+
 
 class Controller extends BaseObject
 {
@@ -15,8 +16,14 @@ class Controller extends BaseObject
     const ACTION_LOGIN = 'login';
     const ACTION_LOGOUT = 'logout';
     const ACTION_ORDER = 'placeOrder';
+    const ACTION_ADD_ARTICLE = 'addArticle';
     const USER_NAME = 'userName';
     const USER_PASSWORD = 'password';
+    const SHOPPING_LIST_ID = 'shoppingListId';
+    const SHOPPING_LIST_NAME = 'name';
+    const SHOPPING_LIST_END_DATE = 'enddate';
+    const ARTICLE_NAME = 'articleName';
+    const ARTICLE_QTY = 'articleQty';
 
 
     private static $instance = false;
@@ -46,9 +53,29 @@ class Controller extends BaseObject
 
 
         switch ($action) {
-            case self::ACTION_ADD_LIST :                
-                //ShoppingCart::add((int) $_REQUEST['bookId']);
+            case self::ACTION_ADD_LIST : 
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(['Not logged in.']);
+                }               
+                $name = $_POST[self::SHOPPING_LIST_NAME];
+                $endDate = $_POST[self::SHOPPING_LIST_END_DATE];
+                if (!$this->addList($name, $endDate)) {
+                    $this->forwardRequest(['Add list failed']);
+                }
                 Util::redirect();
+                break;
+            case self::ACTION_ADD_ARTICLE:
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(['Not logged in.']);
+                } 
+                $shoppingListId = $_POST[self::SHOPPING_LIST_ID];
+                $name = $_POST[self::ARTICLE_NAME];
+                $qty = $_POST[self::ARTICLE_QTY];
+                if (!$this->addArticle($shoppingListId, $name, $qty)) {
+                    $this->forwardRequest(['Add article failed']);   
+                }
                 break;
             case self::ACTION_REMOVE :
                 ShoppingCart::remove((int) $_REQUEST['bookId']);
@@ -119,6 +146,31 @@ class Controller extends BaseObject
         return true;
     }
 
+    protected function addList(string $name = null, $endDate) {
+        $errors = [];
+
+        if ($name == null || strlen($name) == 0) {
+            $errors[] = 'Invalid name';
+        }
+
+        if ($endDate == null || !strtotime($endDate)) {
+            $errors[] = 'Invalid date';
+        }
+
+        if (sizeof($errors) > 0) {
+            $this->forwardRequest($errors);
+            return false;
+        }
+
+
+        $user = AuthenticationManager::getAuthenticatedUser();
+
+        Logger::Write("addList Added list {$name}"); 
+        $shoppingListId = \Data\DataManager::createList($user->getId(), $name, $endDate);
+
+        Util::redirect('index.php?view=openLists&shoppingListId='.$shoppingListId);
+        return true;
+    }
 
     /**
      *

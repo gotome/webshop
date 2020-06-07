@@ -16,3 +16,9 @@ Webshop\SessionContext::create();
 /* switch different DataManagers */
 $class = '';
 require_once(__DIR__ .'/../lib/Data/DataManager'  . $class . '.php');
+
+set_error_handler(function ($errorNumber, $errorString) {
+
+var_dump($errorString);
+die();
+});

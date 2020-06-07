@@ -1,12 +1,14 @@
 <?php
 
-namespace Log;
+namespace Log; 
+use Webshop\AuthenticationManager;
 
-class Log 
+class Logger 
 {
-    static public function Write(string $ip, string $action, string $userName, string $timestamp) {
+    public static function Write(string $action) {
         $filename = 'logs/logfile.txt';
-        $strData = $ip . ' ' .  $action . ' ' . $userName . ' ' . $timestamp; 
+        $userName = AuthenticationManager::getAuthenticatedUser()->getUserName(); 
+        $strData = $_SERVER['REMOTE_ADDR'] . ' ' . $action . ' ' .  $userName . ' ' . gmdate('Y-m-d H:i:s'); 
 
         if (!is_writable($filename))
         echo 'Change your CHMOD permissions to ' . $filename; 

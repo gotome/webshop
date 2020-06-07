@@ -8,6 +8,8 @@ interface IDataManager {
     public static function getUserById(int $userId);
     public static function getUserByUserName(string $userName);
     public static function getOpenShoppingLists(); 
+    public static function getArticles(int $shoppingListId);
+    public static function createList(int $userId, string $name, $endDate);
     //public static function createOrder(int $userId, array $bookIds, string $nameOnCard, string $cardNumber) : int;
 }
 

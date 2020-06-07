@@ -18,21 +18,6 @@ if (isset($errors) && is_array($errors)) : ?>
 
 <div class="footer">
 
-  <!--display cart info-->
-  <hr /> 
-  <?php if (AuthenticationManager::isAuthenticated()) { ?>
-    <div class="col-sm-8">
-      <button class="btn btn-primary btn-xs" type="button">
-        <span class="badge"><?php echo Webshop\Util::escape($cartSize); ?></span> offene Listen
-      </button>
-    </div>  
-  <?php } ?>
-  <div class="col-sm-4 pull-right">
-    <p><?php echo Webshop\Util::escape(strftime('%c')); ?></p>
-  </div>
-
-
-  <!--/display cart info-->
 
 </div>
 

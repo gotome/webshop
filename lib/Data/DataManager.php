@@ -7,6 +7,7 @@ use Log\Log;
 use Webshop\Category;
 use Webshop\Book;
 use Webshop\User;
+use Webshop\Article;
 use Webshop\PagingResult;
 use Webshop\ShoppingList;
 
@@ -113,6 +114,50 @@ class DataManager implements IDataManager
         return $resultList;
     }
 
+    public static function getArticles(int $shoppingListId) {
+        $resultList = [];
+        $con = self::getConnection();
+        $res = self::query($con, "
+            SELECT id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag
+            FROM article
+            WHERE shoppingListId = ?;
+        ", [$shoppingListId]);
+        while ($cat = self::fetchObject($res)) {
+            $resultList[] = new Article($cat->id, $cat->shoppingListId, $cat->description,$cat->amount, $cat->highestPrice, $cat->deletedFlag, $cat->doneFlag
+            );
+        }
+        self::close($res);
+        self::closeConnection();
+        return $resultList;
+    }
+
+    public static function createList(int $userId, string $name, $endDate) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+
+            self::query ($con, "
+                INSERT INTO shoppingList ( 
+                    ownerId,
+                    name, 
+                    endDate
+                ) VALUES (
+                    ?, ?, ?
+                );
+            ", [$userId, $name, $endDate]);
+
+            $shoppingListId = self::lastInsertId($con);
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $orderId = null;
+        }
+        self::closeConnection();
+        return $shoppingListId;
+    }
+
     /**
      * get the books per category
      *
@@ -179,7 +224,7 @@ class DataManager implements IDataManager
      * @param integer $numPerPage  number of items per page
      * @return array of Book-items
      */
-    /*
+    
     public static function getBooksForSearchCriteriaWithPaging($term, $offset, $numPerPage) {
         $con = self::getConnection();
         //query total count
@@ -205,7 +250,7 @@ class DataManager implements IDataManager
         self::closeConnection($con);
         return new PagingResult($books, $offset, $totalCount);
     }
-*/
+
     /**
      * get the User item by id
      *
