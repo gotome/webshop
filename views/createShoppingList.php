@@ -23,7 +23,7 @@ require_once('views/partials/header.php');
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">Name:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputName" name="<?php echo Webshop\Controller::SHOPPING_LIST_NAME; ?>" placeholder="listenname" value="<?php echo htmlentities($name); ?>">
+                    <input type="text" class="form-control" id="inputName" name="<?php echo Webshop\Controller::SHOPPING_LIST_NAME; ?>" placeholder="Listenname" value="<?php echo htmlentities($name); ?>">
                 </div>
             </div>
             <div class="form-group">

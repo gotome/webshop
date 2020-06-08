@@ -1,21 +1,22 @@
 body {
-  padding-top: 60px;
+    padding-top: 60px;
 }
 
 .centered {
-  text-align: center;
+    text-align: center;
 }
 
 .navbar .login {
-  float: right;
+    float: right;
 }
+
 .navbar .login form {
-  margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .footer {
-
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .add-remove input {

@@ -25,6 +25,7 @@ if (isset($errors) && is_array($errors)) : ?>
 
 <script src="assets/jquery-1.11.2.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/main.css">
 
 </body>
 

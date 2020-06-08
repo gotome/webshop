@@ -2,13 +2,13 @@
 
 namespace Data;
 
-use Log\ConsoleWrite;
-use Log\Log;
-use Webshop\Category;
-use Webshop\Book;
+//use Log\ConsoleWrite;
+//use Log\Log;
+//use Webshop\Category;
+//use Webshop\Book;
 use Webshop\User;
 use Webshop\Article;
-use Webshop\PagingResult;
+//use Webshop\PagingResult;
 use Webshop\ShoppingList;
 
 
@@ -55,7 +55,7 @@ class DataManager implements IDataManager
             foreach ($parameters as $param) {
                 if (is_int($param)) {
                     $statement->bindValue($i, $param, \PDO::PARAM_INT);
-                }
+                }                
                 if (is_string($param)) {
                     $statement->bindValue($i, $param, \PDO::PARAM_STR);
                 }
@@ -88,6 +88,60 @@ class DataManager implements IDataManager
         return $connection->lastInsertId();
     }
 
+        /**
+     * get the categories
+     *
+     * note: global …; -> suboptimal
+     *
+     * @return array of Category-items
+     */
+    public static function getClosedShoppingLists(): array
+    {
+        $resultList = [];
+        $con = self::getConnection();
+        $res = self::query($con, "
+            SELECT id, ownerId, helperId, endDate, paidPrice, state, name
+            FROM shoppinglist
+            WHERE state = 'done'            
+            ORDER BY endDate;
+        ");
+        while ($cat = self::fetchObject($res)) {
+            $resultList[] = new ShoppingList($cat->id, $cat->ownerId, 
+                $cat->helperId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
+            );
+        }
+        self::close($res);
+        self::closeConnection();
+        return $resultList;
+    }
+
+            /**
+     * get the categories
+     *
+     * note: global …; -> suboptimal
+     *
+     * @return array of Category-items
+     */
+    public static function getInProcessShoppingLists(): array
+    {
+        $resultList = [];
+        $con = self::getConnection();
+        $res = self::query($con, "
+            SELECT id, ownerId, helperId, endDate, paidPrice, state, name
+            FROM shoppinglist
+            WHERE state = 'processing'            
+            ORDER BY endDate;
+        ");
+        while ($cat = self::fetchObject($res)) {
+            $resultList[] = new ShoppingList($cat->id, $cat->ownerId, 
+                $cat->helperId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
+            );
+        }
+        self::close($res);
+        self::closeConnection();
+        return $resultList;
+    }
+
     /**
      * get the categories
      *
@@ -102,7 +156,8 @@ class DataManager implements IDataManager
         $res = self::query($con, "
             SELECT id, ownerId, helperId, endDate, paidPrice, state, name
             FROM shoppinglist
-            WHERE state = 'new';
+            WHERE state = 'unpublished' or state = 'new'            
+            ORDER BY endDate;
         ");
         while ($cat = self::fetchObject($res)) {
             $resultList[] = new ShoppingList($cat->id, $cat->ownerId, 
@@ -114,13 +169,53 @@ class DataManager implements IDataManager
         return $resultList;
     }
 
+    public static function getShoppingListById(int $shoppingListId)
+    {
+        $resultList = null; 
+        $con = self::getConnection();
+        $res = self::query($con, "
+            SELECT id, ownerId, helperId, endDate, paidPrice, state, name
+            FROM shoppinglist
+            WHERE id = ?;
+        ", [$shoppingListId]);
+        while ($cat = self::fetchObject($res)) {
+            $resultList = new ShoppingList($cat->id, $cat->ownerId, 
+                $cat->helperId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
+            );
+        }
+        self::close($res);
+        self::closeConnection();
+        return $resultList;
+    }
+
+    public static function getArticleById(int $articleId)
+    {
+        $resultArticle = null; 
+        $con = self::getConnection();
+        $res = self::query($con, "
+            SELECT id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag
+            FROM article
+            WHERE id = ?;
+        ", [$articleId]);
+        while ($cat = self::fetchObject($res)) {
+            $resultArticle = new Article($cat->id, $cat->shoppingListId, 
+                                         $cat->description,$cat->amount, 
+                                         $cat->highestPrice, $cat->deletedFlag, 
+                                         $cat->doneFlag
+                                    );
+        }
+        self::close($res);
+        self::closeConnection();
+        return $resultArticle;
+    }
+
     public static function getArticles(int $shoppingListId) {
         $resultList = [];
         $con = self::getConnection();
         $res = self::query($con, "
             SELECT id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag
             FROM article
-            WHERE shoppingListId = ?;
+            WHERE shoppingListId = ? AND deletedFlag = false;
         ", [$shoppingListId]);
         while ($cat = self::fetchObject($res)) {
             $resultList[] = new Article($cat->id, $cat->shoppingListId, $cat->description,$cat->amount, $cat->highestPrice, $cat->deletedFlag, $cat->doneFlag
@@ -129,6 +224,32 @@ class DataManager implements IDataManager
         self::close($res);
         self::closeConnection();
         return $resultList;
+    }
+
+    public static function createArticle(int $shoppingListId, string $description, int $amount, $highestPrice) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+        try {
+            self::query ($con, "
+                INSERT INTO article( 
+                    shoppingListId,
+                    description, 
+                    amount,
+                    highestPrice
+                ) VALUES (
+                    ?, ?, ?, ?
+                );
+            ", [$shoppingListId, $description, $amount, $highestPrice]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $description = null; 
+            $amount = null; 
+            $highestPrice = null; 
+        }
+        self::closeConnection();
     }
 
     public static function createList(int $userId, string $name, $endDate) {
@@ -147,15 +268,75 @@ class DataManager implements IDataManager
                 );
             ", [$userId, $name, $endDate]);
 
-            $shoppingListId = self::lastInsertId($con);
             $con->commit();
         }
         catch (\Exception $e) {
             $con->rollBack();
-            $orderId = null;
+            $userId = null; 
+            $name = null; 
+            $endDate = null; 
         }
         self::closeConnection();
-        return $shoppingListId;
+    }
+
+    public static function deleteListEntry(int $shoppingListId) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+            self::query ($con, "
+                UPDATE shoppingList 
+                SET state = 'done'
+                WHERE id = ?
+            ", [$shoppingListId]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $shoppingListId = null; 
+        }
+        self::closeConnection();
+    }
+
+    public static function publishListEntry(int $shoppingListId) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+            self::query ($con, "
+                UPDATE shoppingList 
+                SET state = 'new'
+                WHERE id = ?
+            ", [$shoppingListId]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $shoppingListId = null; 
+        }
+        self::closeConnection();
+    }
+
+    public static function deleteArticleEntry(int $articleId) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+            self::query ($con, "
+                UPDATE article 
+                SET deletedFlag = true
+                WHERE id = ?
+            ", [$articleId]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $articleId = null; 
+        }
+        self::closeConnection();
     }
 
     /**
@@ -224,7 +405,7 @@ class DataManager implements IDataManager
      * @param integer $numPerPage  number of items per page
      * @return array of Book-items
      */
-    
+    /*
     public static function getBooksForSearchCriteriaWithPaging($term, $offset, $numPerPage) {
         $con = self::getConnection();
         //query total count
@@ -250,7 +431,7 @@ class DataManager implements IDataManager
         self::closeConnection($con);
         return new PagingResult($books, $offset, $totalCount);
     }
-
+*/
     /**
      * get the User item by id
      *

@@ -2,7 +2,7 @@
 
 use Data\DataManager;
 
-$Lists = DataManager::getOpenShoppingLists();
+$Lists = DataManager::getInProcessShoppingLists();
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
@@ -16,7 +16,7 @@ require_once('views/partials/header.php'); ?>
         require('views/partials/shoppinglist.php');
     else :
         ?>
-        <div class="alert alert-warning" role="alert">Keine offenen Listen vorhanden</div>
+        <div class="alert alert-warning" role="alert">Keine Listen die gerade abgearbeitet werden vorhanden</div>
     <?php endif; ?>
 <?php endif; ?>
 

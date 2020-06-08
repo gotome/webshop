@@ -94,14 +94,14 @@ CREATE TABLE `shoppinglist` (
   `helperId` int(11) DEFAULT NULL,
   `endDate` date NOT NULL,
   `paidPrice` decimal(6,2),
-  `state` enum('not published','new','processing','done') NOT NULL,
+  `state` enum('unpublished','new','processing','done') NOT NULL,
   `name` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- MOCKDATA shopping list table
 --
-insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (1, 2, NULL, '2020-2-3', 46.55, 'not published', 'Cookley');
+insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (1, 2, NULL, '2020-2-3', 46.55, 'unpublished', 'Cookley');
 insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (2, 2, NULL, '2020-1-3', 0, 'new', 'Kuchenliste');
 insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (3, 2, NULL, '2020-1-3', 0, 'new', 'Suppenliste');
 insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name) values (4, 2, 3, '2020-2-13', 23.87, 'processing', 'Stringtough');
