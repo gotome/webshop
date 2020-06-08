@@ -76,7 +76,7 @@ class Controller extends BaseObject
                     $this->forwardRequest(['Not logged in.']);
                 }         
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID];
-                Util::redirect('index.php?view=editList&shoppingListId=' . rawurlencode($shoppingListId));
+                Util::redirect('index.php?view=helpSeeker/editList&shoppingListId=' . rawurlencode($shoppingListId));
                 break; 
             
             case self::ACTION_DELETE_LIST: 
@@ -190,7 +190,7 @@ class Controller extends BaseObject
         Logger::Write("ACTION: ADD LIST LIST_NAME = {$name}");         
         \Data\DataManager::createList($user->getId(), $name, $endDate);
 
-        Util::redirect('index.php?view=openLists');
+        Util::redirect('index.php?view=helpSeeker/openLists');
         return true;
     }
 

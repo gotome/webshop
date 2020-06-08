@@ -46,10 +46,10 @@ if (isset($_GET['errors'])) {
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>             
                     <!-- help seeker -->
                     <?php  if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?> 
-                        <li <?php if ($view === 'createShoppingList') { ?>class="active" <?php } ?>><a href="index.php?view=createShoppingList">Neue Liste</a></li>    
-                        <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=openLists">Offene Listen</a></li>              
-                        <li <?php if ($view === 'listsInProcess') { ?>class="active" <?php } ?>><a href="index.php?view=listsInProcess">Listen in Arbeit</a></li>         
-                        <li <?php if ($view === 'closedLists') { ?>class="active" <?php } ?>><a href="index.php?view=closedLists">Erledigte Listen</a></li>                               
+                        <li <?php if ($view === 'createShoppingList') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/createShoppingList">Neue Liste</a></li>    
+                        <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/openLists">Offene Listen</a></li>              
+                        <li <?php if ($view === 'listsInProcess') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/listsInProcess">Listen in Arbeit</a></li>         
+                        <li <?php if ($view === 'closedLists') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/closedLists">Erledigte Listen</a></li>                               
                     <?php  } ?>
                     <!-- helper -->
                     
