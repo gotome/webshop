@@ -2,7 +2,6 @@
 
 use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart, Webshop\RoleType;
 $user = AuthenticationManager::getAuthenticatedUser();
-$cartSize = ShoppingCart::size();
 
 if (isset($_GET['errors'])) {
     $errors = unserialize(urldecode($_GET['errors']));

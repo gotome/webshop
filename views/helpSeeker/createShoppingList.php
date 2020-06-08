@@ -1,6 +1,6 @@
 <?php
 
-use Webshop\AuthenticationManager, Webshop\Util;
+use  Webshop\Util;
 
 
 $name = $_REQUEST[Webshop\Controller::SHOPPING_LIST_NAME] ?? null;

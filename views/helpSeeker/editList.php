@@ -1,6 +1,6 @@
 <?php 
 
-use Webshop\AuthenticationManager, Webshop\Util;
+use Webshop\Util;
 use Data\DataManager;
 
 $articles = DataManager::getArticles($_GET['shoppingListId']);
@@ -39,8 +39,7 @@ require_once('views/partials/header.php'); ?>
     
 <?php if (isset($articles)) : ?>
     <?php
-    if (sizeof($articles) > 0) :    
-        //var_dump($articles);    
+    if (sizeof($articles) > 0) :   
         require('views/partials/editListTable.php');
     else :
         ?>

@@ -2,7 +2,7 @@
 
 <?php
 
-use Webshop\Util, Webshop\AuthenticationManager;
+use Webshop\Util;
 
 if (isset($errors) && is_array($errors)) : ?>
   <div class="errors alert alert-danger">

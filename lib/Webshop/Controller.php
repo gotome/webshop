@@ -9,20 +9,19 @@ class Controller extends BaseObject
 {
     const ACTION = 'action';
     const PAGE = 'page';
-    //const CC_NAME = 'nameOnCard';
-    //const CC_NUMBER = 'cardNumber';
-    const ACTION_ADD_LIST = 'addList';
-    //const ACTION_REMOVE = 'removeFromCart';
+    //ACTIONS
     const ACTION_LOGIN = 'login';
     const ACTION_LOGOUT = 'logout';
-    //const ACTION_ORDER = 'placeOrder';
+    const ACTION_ADD_LIST = 'addList';
+    const ACTION_DELETE_LIST = 'deleteList'; 
+    const ACTION_TAKE_LIST = 'takeList'; 
+    const ACTION_PUBLISH_LIST = 'publishList'; 
     const ACTION_ADD_ARTICLE = 'addArticle';
     const ACTION_EDIT_ARTICLE = 'editArticle'; 
     const ACTION_SHOW_ARTICLE = 'showArticle'; 
     const ACTION_DELETE_ARTICLE = 'deleteArticle'; 
-    const ACTION_DELETE_LIST = 'deleteList'; 
-    const ACTION_TAKE_LIST = 'takeList'; 
     const ACTION_ARTICLE_BOUGHT = 'articleBought'; 
+    //constant for variables
     const USER_NAME = 'userName';
     const USER_PASSWORD = 'password';
     const SHOPPING_LIST_ID = 'shoppingListId';
@@ -34,7 +33,6 @@ class Controller extends BaseObject
     const ARTICLE_NAME = 'articleName';
     const ARTICLE_AMOUNT = 'articleamount';
     const ARTICLE_HIGHEST_PRICE = 'highestPrice';
-    const ACTION_PUBLISH_LIST = 'publishList'; 
 
 
     private static $instance = false;
@@ -114,8 +112,7 @@ class Controller extends BaseObject
                 if (!$this->deleteList($shoppingListId)) {
                     $this->forwardRequest(['Delete list failed']);
                 }
-                Util::redirect();
-                
+                Util::redirect();                
                 break; 
             
             case self::ACTION_LIST_FINISHED : 
@@ -130,6 +127,7 @@ class Controller extends BaseObject
                 }
                 Util::redirect('index.php?view=helper/takenLists');
                 break; 
+
             case self::ACTION_DELETE_ARTICLE: 
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
@@ -139,8 +137,7 @@ class Controller extends BaseObject
                 if (!$this->deleteArticle($articleId)) {
                     $this->forwardRequest(['Delete article failed']);
                 }
-                Util::redirect();
-                
+                Util::redirect();                
                 break; 
             
             case self::ACTION_ARTICLE_BOUGHT: 
@@ -152,9 +149,9 @@ class Controller extends BaseObject
                 if (!$this->boughtArticle($articleId)) {
                     $this->forwardRequest(['Delete article failed']);
                 }
-
                 Util::redirect();
                 break; 
+
             case self::ACTION_ADD_LIST : 
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
@@ -167,6 +164,7 @@ class Controller extends BaseObject
                 }
                 Util::redirect();
                 break;
+                
             case self::ACTION_ADD_ARTICLE:
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {

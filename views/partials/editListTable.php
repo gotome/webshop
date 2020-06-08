@@ -1,4 +1,4 @@
-<?php use Webshop\Util, Webshop\RoleType, Data\DataManager; 
+<?php use Webshop\Util, Webshop\RoleType; 
 require_once('views/partials/header.php');
 
 ?>
