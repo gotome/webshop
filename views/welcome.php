@@ -7,11 +7,11 @@
     }
 ?>
 
-<div style="background-image: url('assets/pictures/HomeBackground.jpg');">
+<div style="background-image: url('assets/pictures/HomeBackground2.jpg');">
 
 <style>
 body {
-  background-image: url('assets/pictures/HomeBackground.jpg');
+  background-image: url('assets/pictures/HomeBackground2.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;

@@ -1,12 +1,17 @@
 <?php 
 
 use Data\DataManager;
+use Webshop\ShoppingListStatus; 
+use Webshop\AuthenticationManager; 
 
-$Lists = DataManager::getClosedShoppingLists();
+$user = AuthenticationManager::getAuthenticatedUser();
+$userId = $user->getId(); 
+
+$Lists = DataManager::getHelpSeekerShoppingListsByState($userId, ShoppingListStatus::DONE_STATE);
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
-    <h2>Alle erledigten Listen</h2>
+    <h2>Erledigte Listen</h2>
 </div>  
 
     
@@ -21,3 +26,4 @@ require_once('views/partials/header.php'); ?>
 <?php endif; ?>
 
 
+<?php require_once('views/partials/footer.php'); ?>

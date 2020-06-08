@@ -44,7 +44,7 @@ require_once('views/partials/header.php'); ?>
         require('views/partials/editListTable.php');
     else :
         ?>
-        <div class="alert alert-warning" role="alert">No articles</div>
+        <div class="alert alert-warning" role="alert">Keine Artikel vorhanden</div>
     <?php endif; ?>
 <?php endif; ?>
 

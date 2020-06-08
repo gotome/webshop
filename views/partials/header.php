@@ -45,13 +45,18 @@ if (isset($_GET['errors'])) {
                 <ul class="nav navbar-nav">
                     <li <?php if ($view === 'welcome') { ?>class="active" <?php } ?>><a href="index.php">Startseite</a></li>             
                     <!-- help seeker -->
-                    <?php  if ($user != NULL && $user->hasRole(RoleType::$HELPSEEKER)) { ?> 
+                    <?php  if ($user != NULL && $user->hasRole(RoleType::HELPSEEKER)) { ?> 
                         <li <?php if ($view === 'createShoppingList') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/createShoppingList">Neue Liste</a></li>    
                         <li <?php if ($view === 'openLists') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/openLists">Offene Listen</a></li>              
                         <li <?php if ($view === 'listsInProcess') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/listsInProcess">Listen in Arbeit</a></li>         
                         <li <?php if ($view === 'closedLists') { ?>class="active" <?php } ?>><a href="index.php?view=helpSeeker/closedLists">Erledigte Listen</a></li>                               
                     <?php  } ?>
                     <!-- helper -->
+                    <?php  if ($user != NULL && $user->hasRole(RoleType::HELPER)) { ?> 
+                        <li <?php if ($view === 'publishedLists') { ?>class="active" <?php } ?>><a href="index.php?view=helper/publishedLists">Freigegebene Listen</a></li>  
+                        <li <?php if ($view === 'takenLists') { ?>class="active" <?php } ?>><a href="index.php?view=helper/takenLists">Abzuarbeitende Listen</a></li>       
+                        <li <?php if ($view === 'finishedLists') { ?>class="active" <?php } ?>><a href="index.php?view=helper/finishedLists">Abgearbeite Listen</a></li>                            
+                    <?php  } ?>
                     
                     <!-- authenticated -->
                     <?php  if (AuthenticationManager::isAuthenticated()) { ?>        

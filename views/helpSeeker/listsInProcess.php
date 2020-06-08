@@ -1,12 +1,16 @@
 <?php 
 
 use Data\DataManager;
+use Webshop\ShoppingListStatus; 
+use Webshop\AuthenticationManager; 
 
-$Lists = DataManager::getInProcessShoppingLists();
+$user = AuthenticationManager::getAuthenticatedUser();
+$userId = $user->getId(); 
+$Lists = DataManager::getHelpSeekerShoppingListsByState($userId, ShoppingListStatus::PROCESSING_STATE);
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
-    <h2>Alle offenen Listen</h2>
+    <h2>Listen in Arbeit</h2>
 </div>  
 
     
@@ -21,3 +25,5 @@ require_once('views/partials/header.php'); ?>
 <?php endif; ?>
 
 
+<?php
+require_once('views/partials/footer.php'); ?>

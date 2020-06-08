@@ -1,16 +1,15 @@
 <?php 
 
 use Data\DataManager;
-use Webshop\ShoppingListStatus; 
 use Webshop\AuthenticationManager; 
 
 $user = AuthenticationManager::getAuthenticatedUser();
 $userId = $user->getId(); 
-$Lists = DataManager::getHelpSeekerShoppingListsByState($userId, ShoppingListStatus::NEW_STATE, ShoppingListStatus::UNPUBLISHED_STATE);
+$Lists = DataManager::getAllOpenShoppingLists();
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
-    <h2>Offenen Listen</h2>
+    <h2>Alle freigegebenen Listen</h2>
 </div>  
 
     
@@ -20,7 +19,7 @@ require_once('views/partials/header.php'); ?>
         require('views/partials/shoppinglist.php');
     else :
         ?>
-        <div class="alert alert-warning" role="alert">Keine offenen Listen vorhanden</div>
+        <div class="alert alert-warning" role="alert">Keine freigegebenen Listen vorhanden</div>
     <?php endif; ?>
 <?php endif; ?>
 

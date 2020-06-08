@@ -88,23 +88,23 @@ class DataManager implements IDataManager
         return $connection->lastInsertId();
     }
 
-        /**
+    /**
      * get the categories
      *
      * note: global …; -> suboptimal
      *
      * @return array of Category-items
      */
-    public static function getClosedShoppingLists(): array
+    public static function getHelpSeekerShoppingListsByState(int $helpSeekerId, string $state1 = '', string $state2 = ''): array
     {
         $resultList = [];
         $con = self::getConnection();
         $res = self::query($con, "
             SELECT id, ownerId, helperId, endDate, paidPrice, state, name
             FROM shoppinglist
-            WHERE state = 'done'            
+            WHERE (ownerId = ? and (state = ? or state = ?))          
             ORDER BY endDate;
-        ");
+        ", [$helpSeekerId, $state1, $state2]);
         while ($cat = self::fetchObject($res)) {
             $resultList[] = new ShoppingList($cat->id, $cat->ownerId, 
                 $cat->helperId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
@@ -115,23 +115,23 @@ class DataManager implements IDataManager
         return $resultList;
     }
 
-            /**
+        /**
      * get the categories
      *
      * note: global …; -> suboptimal
      *
      * @return array of Category-items
      */
-    public static function getInProcessShoppingLists(): array
+    public static function getHelperShoppingListsByState(int $helperId, string $state1 = '', string $state2 = ''): array
     {
         $resultList = [];
         $con = self::getConnection();
         $res = self::query($con, "
             SELECT id, ownerId, helperId, endDate, paidPrice, state, name
             FROM shoppinglist
-            WHERE state = 'processing'            
+            WHERE (helperId = ? and (state = ? or state = ?))          
             ORDER BY endDate;
-        ");
+        ", [$helperId, $state1, $state2]);
         while ($cat = self::fetchObject($res)) {
             $resultList[] = new ShoppingList($cat->id, $cat->ownerId, 
                 $cat->helperId, $cat->endDate , $cat->paidPrice, $cat->state, $cat->name
@@ -149,14 +149,14 @@ class DataManager implements IDataManager
      *
      * @return array of Category-items
      */
-    public static function getOpenShoppingLists(): array
+    public static function getAllOpenShoppingLists(): array
     {
         $resultList = [];
         $con = self::getConnection();
         $res = self::query($con, "
             SELECT id, ownerId, helperId, endDate, paidPrice, state, name
             FROM shoppinglist
-            WHERE state = 'unpublished' or state = 'new'            
+            WHERE state = 'new'        
             ORDER BY endDate;
         ");
         while ($cat = self::fetchObject($res)) {
@@ -299,6 +299,26 @@ class DataManager implements IDataManager
         self::closeConnection();
     }
 
+    public static function finishListEntry(int $shoppingListId, $paidPrice) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+            self::query ($con, "
+                UPDATE shoppingList 
+                SET state = 'done', paidPrice = ? 
+                WHERE id = ?
+            ", [$paidPrice, $shoppingListId]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $shoppingListId = null; 
+        }
+        self::closeConnection();
+    }
+
     public static function publishListEntry(int $shoppingListId) {
         $con = self::getConnection();
         $con->beginTransaction();
@@ -319,6 +339,27 @@ class DataManager implements IDataManager
         self::closeConnection();
     }
 
+    public static function takeListEntry(int $helperId, int $shoppingListId) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+            self::query ($con, "
+                UPDATE shoppingList 
+                SET helperId = ?, state = 'processing'
+                WHERE id = ?
+            ", [$helperId, $shoppingListId]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $shoppingListId = null; 
+            $helperId = null; 
+        }
+        self::closeConnection();
+    }
+
     public static function deleteArticleEntry(int $articleId) {
         $con = self::getConnection();
         $con->beginTransaction();
@@ -327,6 +368,26 @@ class DataManager implements IDataManager
             self::query ($con, "
                 UPDATE article 
                 SET deletedFlag = true
+                WHERE id = ?
+            ", [$articleId]);
+
+            $con->commit();
+        }
+        catch (\Exception $e) {
+            $con->rollBack();
+            $articleId = null; 
+        }
+        self::closeConnection();
+    }
+
+    public static function articleBoughtEntry(int $articleId) {
+        $con = self::getConnection();
+        $con->beginTransaction();
+
+        try {
+            self::query ($con, "
+                UPDATE article 
+                SET doneFlag = true
                 WHERE id = ?
             ", [$articleId]);
 

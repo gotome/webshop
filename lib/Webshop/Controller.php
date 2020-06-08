@@ -18,13 +18,18 @@ class Controller extends BaseObject
     //const ACTION_ORDER = 'placeOrder';
     const ACTION_ADD_ARTICLE = 'addArticle';
     const ACTION_EDIT_ARTICLE = 'editArticle'; 
+    const ACTION_SHOW_ARTICLE = 'showArticle'; 
     const ACTION_DELETE_ARTICLE = 'deleteArticle'; 
     const ACTION_DELETE_LIST = 'deleteList'; 
+    const ACTION_TAKE_LIST = 'takeList'; 
+    const ACTION_ARTICLE_BOUGHT = 'articleBought'; 
     const USER_NAME = 'userName';
     const USER_PASSWORD = 'password';
     const SHOPPING_LIST_ID = 'shoppingListId';
     const SHOPPING_LIST_NAME = 'name';
     const SHOPPING_LIST_END_DATE = 'enddate';
+    const SHOPPING_LIST_PAID_PRICE = 'paidPrice';
+    const ACTION_LIST_FINISHED = 'finishedList'; 
     const ARTICLE_ID = 'articleId';
     const ARTICLE_NAME = 'articleName';
     const ARTICLE_AMOUNT = 'articleamount';
@@ -58,6 +63,18 @@ class Controller extends BaseObject
         $action = $_REQUEST[self::ACTION];
 
         switch ($action) {
+            case self::ACTION_TAKE_LIST :
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(['Not logged in.']);
+                }  
+                $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID]; 
+                if (!$this->takeList($shoppingListId)) {
+                    $this->forwardRequest(['publish list failed']);
+                }
+                Util::redirect();
+                break; 
+
             case self::ACTION_PUBLISH_LIST : 
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
@@ -70,6 +87,15 @@ class Controller extends BaseObject
                 Util::redirect();
                 break; 
             
+            case self::ACTION_SHOW_ARTICLE :
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(['Not logged in.']);
+                }         
+                $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID];
+                Util::redirect('index.php?view=helper/showList&shoppingListId=' . rawurlencode($shoppingListId));
+                break;             
+
             case self::ACTION_EDIT_ARTICLE :
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
@@ -91,6 +117,19 @@ class Controller extends BaseObject
                 Util::redirect();
                 
                 break; 
+            
+            case self::ACTION_LIST_FINISHED : 
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(['Not logged in.']);
+                }  
+                $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID]; 
+                $paidPrice = $_REQUEST[self::SHOPPING_LIST_PAID_PRICE]; 
+                if (!$this->finishList($shoppingListId, $paidPrice)) {
+                    $this->forwardRequest(['Delete list failed']);
+                }
+                Util::redirect('index.php?view=helper/takenLists');
+                break; 
             case self::ACTION_DELETE_ARTICLE: 
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
@@ -102,6 +141,19 @@ class Controller extends BaseObject
                 }
                 Util::redirect();
                 
+                break; 
+            
+            case self::ACTION_ARTICLE_BOUGHT: 
+                $user = AuthenticationManager::getAuthenticatedUser();
+                if ($user == null) {
+                    $this->forwardRequest(['Not logged in.']);
+                }  
+                $articleId = $_REQUEST[self::ARTICLE_ID]; 
+                if (!$this->boughtArticle($articleId)) {
+                    $this->forwardRequest(['Delete article failed']);
+                }
+
+                Util::redirect();
                 break; 
             case self::ACTION_ADD_LIST : 
                 $user = AuthenticationManager::getAuthenticatedUser();
@@ -128,12 +180,7 @@ class Controller extends BaseObject
                     $this->forwardRequest(['Add article failed']);   
                 }
                 break;
-                /*
-            case self::ACTION_REMOVE :
-                ShoppingCart::remove((int) $_REQUEST['bookId']);
-                Util::redirect();
-                break; 
-                */
+
             case self::ACTION_LOGIN :
                 if (!AuthenticationManager::authenticate($_REQUEST[self::USER_NAME], $_REQUEST[self::USER_PASSWORD])) {     
                     $this->forwardRequest(array('Falscher Beutzername oder Passwort'));
@@ -148,19 +195,9 @@ class Controller extends BaseObject
                 
                 Logger::Write("ACTION: LOGOUT"); 
                 AuthenticationManager::signOut();
-                Util::redirect();
+                Util::redirect("index.php?view=login");
                 break;
-/*
-            case self::ACTION_ORDER :
-                $user = AuthenticationManager::getAuthenticatedUser();
-                if ($user == null) {
-                    $this->forwardRequest(['Not logged in.']);
-                }
-                if (!$this->processCheckout($_POST[self::CC_NAME], $_POST[self::CC_NUMBER])) {
-                    $this->forwardRequest(['Checkout failed']);
-                }
-                break;
-*/
+
             default :
                 throw new \Exception('Unknown controller action: ' . $action);
                 return null;
@@ -213,6 +250,29 @@ class Controller extends BaseObject
         return true;
     }
 
+    protected function finishList(int $shoppingListId, $paidPrice) {
+        $errors = [];
+
+        if ($shoppingListId == null || $shoppingListId < 0) {
+            $errors[] = 'Invalid shopping list id';
+        }
+
+        if ($paidPrice == null || !is_numeric($paidPrice)) {
+            $errors[] = 'Invalid paid price';
+        }
+
+        if (sizeof($errors) > 0) {
+            $this->forwardRequest($errors);
+            return false;
+        }
+        $shoppingList = \Data\DataManager::getShoppingListById($shoppingListId);         
+        $name = $shoppingList->getName(); 
+        Logger::Write("ACTION: FINISH LIST LIST_NAME = {$name}"); 
+
+        \Data\DataManager::finishListEntry($shoppingListId, $paidPrice);        
+        return true;
+    }
+
     protected function publishList(int $shoppingListId) {
         $errors = [];
 
@@ -229,6 +289,26 @@ class Controller extends BaseObject
         Logger::Write("ACTION: PUBLISH LIST LIST_NAME = {$name}"); 
 
         \Data\DataManager::publishListEntry($shoppingListId);        
+        return true;
+    }
+
+    protected function takeList(int $shoppingListId) {
+        $errors = [];
+
+        if ($shoppingListId == null || $shoppingListId < 0) {
+            $errors[] = 'Invalid shopping list id';
+        }
+
+        if (sizeof($errors) > 0) {
+            $this->forwardRequest($errors);
+            return false;
+        }
+        $shoppingList = \Data\DataManager::getShoppingListById($shoppingListId);         
+        $user = AuthenticationManager::getAuthenticatedUser();
+        $name = $shoppingList->getName(); 
+        Logger::Write("ACTION: PUBLISH LIST LIST_NAME = {$name}"); 
+
+        \Data\DataManager::takeListEntry($user->getId(), $shoppingListId);        
         return true;
     }
 
@@ -249,6 +329,27 @@ class Controller extends BaseObject
         Logger::Write("ACTION: DELETE ARTICLE ARTICLE_NAME = {$name}"); 
 
         \Data\DataManager::deleteArticleEntry($articleId);   
+        
+        return true;
+    }
+
+    protected function boughtArticle(int $articleId) {
+        $errors = [];
+
+        if ($articleId == null || $articleId < 0) {
+            $errors[] = 'Invalid article id';
+        }
+
+        if (sizeof($errors) > 0) {
+            $this->forwardRequest($errors);
+            return false;
+        }
+      
+        $article = \Data\DataManager::getArticleById($articleId); 
+        $name = $article->getDescription(); 
+        Logger::Write("ACTION: BOUGHT ARTICLE ARTICLE_NAME = {$name}"); 
+
+        \Data\DataManager::articleBoughtEntry($articleId);   
         
         return true;
     }

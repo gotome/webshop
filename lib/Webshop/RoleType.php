@@ -12,7 +12,6 @@ namespace Webshop;
  */
 class RoleType
 {
-    public static int $HELPSEEKER = 1;
-    public static int $HELPER = 2;
-    //public static int $ADMIN = 127;
+    const HELPSEEKER = 1;
+    const HELPER = 2;
 }
