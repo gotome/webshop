@@ -4,8 +4,8 @@ use Webshop\Util;
 use Data\DataManager;
 
 $list = DataManager::getShoppingListById($_GET['shoppingListId']); 
-
 $articles = DataManager::getArticles($_GET['shoppingListId']);
+
 require_once('views/partials/header.php'); ?>
 
 <div class="page-header">

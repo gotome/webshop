@@ -128,15 +128,6 @@ insert into article (id, shoppingListId, description, amount, highestPrice, dele
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (2, 1, 'Pork - Tenderloin, Frozen', 2, 18.2, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (3, 1, 'Shrimp - 16 - 20 Cooked, Peeled', 3, 3.4, false, false);
 insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (4, 1, 'Yogurt - French Vanilla', 4, 35.5, false, false);
-/*insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (5, 2, 'Wine - White, Chardonnay', 5, 33.52, false, false);
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (6, 2, 'Cranberries - Fresh', 6, 24.23, false, false);
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (7, 2, 'Potatoes - Fingerling 4 Oz', 7, 89.12, false, false);
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (8, 2, 'Pepper - Sorrano', 8, 97.65, false, false);
-
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (9, 3, 'Scampi Tail', 9, 57.11, false, false);
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (10, 3, 'Coriander', 10, 89.23, false, false);
-insert into article (id, shoppingListId, description, amount, highestPrice, deletedFlag, doneFlag) VALUES (11, 3, 'Cheese', 11, 38.78, false, false);
-*/
 
 --
 -- Indizes der exportierten Tabellen

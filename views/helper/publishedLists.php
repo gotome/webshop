@@ -4,8 +4,8 @@ use Data\DataManager;
 use Webshop\AuthenticationManager; 
 
 $user = AuthenticationManager::getAuthenticatedUser();
-$userId = $user->getId(); 
-$Lists = DataManager::getAllOpenShoppingLists();
+$userId = isset($user) ? $user->getId() : null; 
+$Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getAllOpenShoppingLists() : null;
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">

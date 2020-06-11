@@ -5,8 +5,8 @@ use Webshop\ShoppingListStatus;
 use Webshop\AuthenticationManager; 
 
 $user = AuthenticationManager::getAuthenticatedUser();
-$userId = $user->getId(); 
-$Lists = DataManager::getHelperShoppingListsByState($userId, ShoppingListStatus::PROCESSING_STATE);
+$userId = isset($user) ? $user->getId() : null; 
+$Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getHelperShoppingListsByState($userId, ShoppingListStatus::PROCESSING_STATE) : null;
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">

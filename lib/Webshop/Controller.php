@@ -232,9 +232,7 @@ class Controller extends BaseObject
                 throw new \Exception('Unknown controller action: ' . $action);
                 return null;
                 break;
-
         }
-
     }
 
     protected function addList(string $name = null, $endDate) {
