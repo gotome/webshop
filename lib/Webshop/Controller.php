@@ -65,11 +65,15 @@ class Controller extends BaseObject
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
-                }  
+                } 
+                else if (!$user->hasRole(RoleType::HELPER)) {
+                    $this->forwardRequest(['wrong user, only a helper can do this action.']);
+                }
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID]; 
                 if (!$this->takeList($shoppingListId)) {
                     $this->forwardRequest(['publish list failed']);
                 }
+
                 Util::redirect();
                 break; 
 
@@ -78,6 +82,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }  
+                else if (!$user->hasRole(RoleType::HELPSEEKER)) {
+                    $this->forwardRequest(['wrong user, only a help seeker can do this action.']);
+                }
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID]; 
                 if (!$this->publishList($shoppingListId)) {
                     $this->forwardRequest(['publish list failed']);
@@ -90,6 +97,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }         
+                else if (!$user->hasRole(RoleType::HELPER)) {
+                    $this->forwardRequest(['wrong user, only a helper can do this action.']);
+                }
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID];
                 Util::redirect('index.php?view=helper/showList&shoppingListId=' . rawurlencode($shoppingListId));
                 break;             
@@ -99,6 +109,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }         
+                else if (!$user->hasRole(RoleType::HELPSEEKER)) {
+                    $this->forwardRequest(['wrong user, only a help seeker can do this action.']);
+                }
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID];
                 Util::redirect('index.php?view=helpSeeker/editList&shoppingListId=' . rawurlencode($shoppingListId));
                 break; 
@@ -108,6 +121,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }  
+                else if (!$user->hasRole(RoleType::HELPSEEKER)) {
+                    $this->forwardRequest(['wrong user, only a helper seeker can do this action.']);
+                }
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID]; 
                 if (!$this->deleteList($shoppingListId)) {
                     $this->forwardRequest(['Delete list failed']);
@@ -120,6 +136,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }  
+                else if (!$user->hasRole(RoleType::HELPER)) {
+                    $this->forwardRequest(['wrong user, only a helper can do this action.']);
+                }
                 $shoppingListId = $_REQUEST[self::SHOPPING_LIST_ID]; 
                 $paidPrice = $_REQUEST[self::SHOPPING_LIST_PAID_PRICE]; 
                 if (!$this->finishList($shoppingListId, $paidPrice)) {
@@ -133,6 +152,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }  
+                else if (!$user->hasRole(RoleType::HELPSEEKER)) {
+                    $this->forwardRequest(['wrong user, only a help seeker can do this action.']);
+                }
                 $articleId = $_REQUEST[self::ARTICLE_ID]; 
                 if (!$this->deleteArticle($articleId)) {
                     $this->forwardRequest(['Delete article failed']);
@@ -145,6 +167,9 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 }  
+                else if (!$user->hasRole(RoleType::HELPER)) {
+                    $this->forwardRequest(['wrong user, only a helper can do this action.']);
+                }
                 $articleId = $_REQUEST[self::ARTICLE_ID]; 
                 if (!$this->boughtArticle($articleId)) {
                     $this->forwardRequest(['Delete article failed']);
@@ -156,7 +181,10 @@ class Controller extends BaseObject
                 $user = AuthenticationManager::getAuthenticatedUser();
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
-                }               
+                }      
+                else if (!$user->hasRole(RoleType::HELPSEEKER)) {
+                    $this->forwardRequest(['wrong user, only a help seeker can do this action.']);
+                }         
                 $name = $_POST[self::SHOPPING_LIST_NAME];
                 $endDate = $_POST[self::SHOPPING_LIST_END_DATE];
                 if (!$this->addList($name, $endDate)) {
@@ -170,6 +198,10 @@ class Controller extends BaseObject
                 if ($user == null) {
                     $this->forwardRequest(['Not logged in.']);
                 } 
+                else if (!$user->hasRole(RoleType::HELPSEEKER)) {
+                    $this->forwardRequest(['wrong user, only a help seeker can do this action.']);
+                }
+
                 $shoppingListId = $_POST[self::SHOPPING_LIST_ID];
                 $name = $_POST[self::ARTICLE_NAME];
                 $amount = $_POST[self::ARTICLE_AMOUNT];

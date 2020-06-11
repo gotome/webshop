@@ -3,11 +3,12 @@
 use Webshop\Util;
 use Data\DataManager;
 
+$list = DataManager::getShoppingListById($_GET['shoppingListId']); 
 $articles = DataManager::getArticles($_GET['shoppingListId']);
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
-    <h2>Artikel hinzufügen</h2>
+    <h2><?php echo Util::escape($list->getName()); ?></h2>  
 </div>  
 
 <form class="form-horizontal" method="post" action="<?php echo Util::action(Webshop\Controller::ACTION_ADD_ARTICLE, array('view' => $view)); ?>">
