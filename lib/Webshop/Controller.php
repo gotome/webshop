@@ -190,7 +190,6 @@ class Controller extends BaseObject
                     $this->forwardRequest(['Liste hinzufügen fehlgeschlagen']);
                 }
                 Util::redirect('index.php?view=helpSeeker/openLists');
-                //Util::redirect();
                 break;
                 
             case self::ACTION_ADD_ARTICLE:

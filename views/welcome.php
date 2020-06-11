@@ -7,8 +7,6 @@
     }
 ?>
 
-<div style="background-image: url('assets/pictures/HomeBackground.jpg');">
-
 <style>
 body {
   background-image: url('assets/pictures/HomeBackground.jpg');
@@ -17,6 +15,7 @@ body {
   background-size: 100% 100%;
 }
 </style>
+
 
 <?php require_once('views/partials/footer.php'); ?>
 
