@@ -9,7 +9,7 @@ $articles = DataManager::getArticles($_GET['shoppingListId']);
 require_once('views/partials/header.php'); ?>
 
 <div class="page-header">
-    <h2><?php echo $list->getName() ?></h2>  
+    <h2><?php echo Util::escape($list->getName()); ?></h2>  
 </div>  
 
 <?php  if ($user != NULL && $user->getId() == $list->getHelperId()) { ?> 
