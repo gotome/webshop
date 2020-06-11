@@ -33,7 +33,7 @@ require_once('views/partials/header.php'); ?>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-6">
-            <button type="submit" class="btn btn-default">Erstellen</button>
+            <button type="submit" class="btn btn-default">hinzufügen</button>
         </div>
     </div>
 </form>

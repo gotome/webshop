@@ -1,6 +1,6 @@
 <?php
 
-use Webshop\Util, Webshop\AuthenticationManager, Webshop\ShoppingCart, Webshop\RoleType;
+use Webshop\Util, Webshop\AuthenticationManager, Webshop\RoleType;
 $user = AuthenticationManager::getAuthenticatedUser();
 
 if (isset($_GET['errors'])) {
@@ -25,7 +25,6 @@ if (isset($_GET['errors'])) {
 </head>
 
 <body>
-
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -56,11 +55,8 @@ if (isset($_GET['errors'])) {
                         <li <?php if ($view === 'takenLists') { ?>class="active" <?php } ?>><a href="index.php?view=helper/takenLists">Abzuarbeitende Listen</a></li>       
                         <li <?php if ($view === 'finishedLists') { ?>class="active" <?php } ?>><a href="index.php?view=helper/finishedLists">Abgearbeite Listen</a></li>                            
                     <?php  } ?>
-                    
-                    <!-- authenticated -->
-                    <?php  if (AuthenticationManager::isAuthenticated()) { ?>        
-                    <?php  } ?>
-
+                    <!-- admin -->
+                    <!-- not yet implemented -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right login">
                     <li class="dropdown">
