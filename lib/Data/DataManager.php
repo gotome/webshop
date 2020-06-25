@@ -2,13 +2,8 @@
 
 namespace Data;
 
-//use Log\ConsoleWrite;
-//use Log\Log;
-//use Webshop\Category;
-//use Webshop\Book;
 use Webshop\User;
 use Webshop\Article;
-//use Webshop\PagingResult;
 use Webshop\ShoppingList;
 
 
@@ -25,8 +20,8 @@ class DataManager implements IDataManager
             $type = 'mysql';
             $host = 'localhost';
             $name = 'fh_2020_scm4_S1810307037';
-            $user = 'root';
-            $pass = '';
+            $user = 'fh_2020_scm4';
+            $pass = 'fh_2020_scm4';
 
             self::$__connection = new \PDO($type . ':host=' . $host . ';dbname=' . $name . ';charset=utf8', $user, $pass);
         }

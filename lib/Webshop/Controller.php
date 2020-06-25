@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Webshop;
 use Log\Logger; 
 
