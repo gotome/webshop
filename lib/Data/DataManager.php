@@ -25,8 +25,8 @@ class DataManager implements IDataManager
             $type = 'mysql';
             $host = 'localhost';
             $name = 'fh_2020_scm4_S1810307037';
-            $user = 'root';
-            $pass = '';
+            $user = 'fh_2020_scm4';
+            $pass = 'fh_2020_scm4';
 
             self::$__connection = new \PDO($type . ':host=' . $host . ';dbname=' . $name . ';charset=utf8', $user, $pass);
         }
