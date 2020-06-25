@@ -2,13 +2,8 @@
 
 namespace Data;
 
-//use Log\ConsoleWrite;
-//use Log\Log;
-//use Webshop\Category;
-//use Webshop\Book;
 use Webshop\User;
 use Webshop\Article;
-//use Webshop\PagingResult;
 use Webshop\ShoppingList;
 
 
