@@ -1,10 +1,15 @@
 <?php
 
-use  Webshop\Util;
-
+use Webshop\Util;
+use Webshop\AuthenticationManager; 
 
 $name = $_REQUEST[Webshop\Controller::SHOPPING_LIST_NAME] ?? null;
 $date = $_REQUEST[Webshop\Controller::SHOPPING_LIST_END_DATE] ?? null;
+
+if (!AuthenticationManager::isAuthenticated()) {      
+    Util::redirect("index.php?view=login");        
+}
+
 
 require_once('views/partials/header.php');
 ?>

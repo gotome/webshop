@@ -2,9 +2,14 @@
 
 use Webshop\Util;
 use Data\DataManager;
+use Webshop\AuthenticationManager; 
 
 $list = DataManager::getShoppingListById($_GET['shoppingListId']); 
 $articles = DataManager::getArticles($_GET['shoppingListId']);
+
+if (!AuthenticationManager::isAuthenticated()) {      
+    Util::redirect("index.php?view=login");    
+}
 
 require_once('views/partials/header.php'); ?>
 
@@ -18,7 +23,7 @@ require_once('views/partials/header.php'); ?>
         <div class="form-group">
             <label for="inputHighestPrice" class="col-sm-2 control-label">Gesamtpreis:</label>
             <div class="col-sm-6">
-                <input type="number" step="0.01" class="form-control" id="endDate" name="<?php echo Webshop\Controller::SHOPPING_LIST_PAID_PRICE; ?>" placeholder="Gesamtpreis">
+                <input type="number" step="0.01" min="0.0" max="999.99" class="form-control" id="endDate" name="<?php echo Webshop\Controller::SHOPPING_LIST_PAID_PRICE; ?>" placeholder="Gesamtpreis">
             </div>
         </div>
         <div class="form-group">

@@ -2,10 +2,15 @@
 
 use Data\DataManager;
 use Webshop\AuthenticationManager; 
+use Webshop\Util; 
 
 $user = AuthenticationManager::getAuthenticatedUser();
 $userId = isset($user) ? $user->getId() : null; 
 $Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getAllOpenShoppingLists() : null;
+
+if (!AuthenticationManager::isAuthenticated()) {      
+    Util::redirect("index.php?view=login");        
+}
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">
