@@ -22,7 +22,7 @@ require_once('views/partials/header.php'); ?>
       <div class="form-group">
         <label for="inputName" class="col-sm-2 control-label">Name:</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" id="inputName" name="<?php echo Webshop\Controller::ARTICLE_NAME; ?>" placeholder="Artikelname" >
+            <input type="text" minlength="1" maxlength="100" class="form-control" id="inputName" name="<?php echo Webshop\Controller::ARTICLE_NAME; ?>" placeholder="Artikelname" >
         </div>
     </div>
     <div class="form-group">
