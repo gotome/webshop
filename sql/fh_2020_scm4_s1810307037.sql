@@ -95,7 +95,7 @@ CREATE TABLE `shoppinglist` (
   `endDate` date NOT NULL,
   `paidPrice` decimal(6,2),
   `state` enum('unpublished','new','processing','done') NOT NULL,
-  `name` varchar(25) NOT NULL
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -114,7 +114,7 @@ insert into shoppinglist (id, ownerId, helperId, endDate, paidPrice, state, name
 CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `shoppingListId` int(11) DEFAULT NULL,
-  `description` varchar(250) NOT NULL,
+  `description` varchar(100) NOT NULL,
   `amount` int(11) NOT NULL CHECK (`amount` > 0),
   `highestPrice` decimal(6,2) NOT NULL CHECK (`highestPrice` > 0.0),
   `deletedFlag` tinyint(1) NOT NULL,
