@@ -2,12 +2,14 @@
 
 use Webshop\Util;
 use Data\DataManager;
+use Webshop\RoleType; 
 use Webshop\AuthenticationManager; 
 
 $list = DataManager::getShoppingListById($_GET['shoppingListId']); 
 $articles = DataManager::getArticles($_GET['shoppingListId']);
 
-if (!AuthenticationManager::isAuthenticated()) {      
+$user = AuthenticationManager::getAuthenticatedUser();
+if (isset($user) ? !$user->hasRole(RoleType::HELPSEEKER) : true) {    
     Util::redirect("index.php?view=login");     
 }
 

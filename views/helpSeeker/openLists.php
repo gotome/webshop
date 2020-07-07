@@ -4,14 +4,16 @@ use Data\DataManager;
 use Webshop\ShoppingListStatus; 
 use Webshop\AuthenticationManager; 
 use Webshop\Util; 
+use Webshop\RoleType; 
 
 $user = AuthenticationManager::getAuthenticatedUser();
 $userId = isset($user) ? $user->getId() : null; 
-$Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getHelpSeekerShoppingListsByState($userId, ShoppingListStatus::NEW_STATE, ShoppingListStatus::UNPUBLISHED_STATE) : null;
 
-if (!AuthenticationManager::isAuthenticated()) {      
-    Util::redirect("index.php?view=login");    
+if (isset($user) ? !$user->hasRole(RoleType::HELPSEEKER) : true) {    
+    Util::redirect("index.php?view=login");     
 }
+
+$Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getHelpSeekerShoppingListsByState($userId, ShoppingListStatus::NEW_STATE, ShoppingListStatus::UNPUBLISHED_STATE) : null;
 
 
 require_once('views/partials/header.php'); ?>

@@ -3,14 +3,16 @@
 use Data\DataManager;
 use Webshop\AuthenticationManager; 
 use Webshop\Util; 
+use Webshop\RoleType; 
 
 $user = AuthenticationManager::getAuthenticatedUser();
 $userId = isset($user) ? $user->getId() : null; 
-$Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getAllOpenShoppingLists() : null;
 
-if (!AuthenticationManager::isAuthenticated()) {      
-    Util::redirect("index.php?view=login");        
+if (isset($user) ? !$user->hasRole(RoleType::HELPER) : true) {    
+    Util::redirect("index.php?view=login");     
 }
+
+$Lists = (isset($userId) && ((int) $userId > 0)) ? DataManager::getAllOpenShoppingLists() : null;
 
 require_once('views/partials/header.php'); ?>
 <div class="page-header">

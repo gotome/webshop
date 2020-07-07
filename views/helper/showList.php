@@ -2,13 +2,15 @@
 
 use Webshop\Util;
 use Data\DataManager;
-use Webshop\AuthenticationManager; 
+use Webshop\RoleType;
+use Webshop\AuthenticationManager;  
 
 $list = DataManager::getShoppingListById($_GET['shoppingListId']); 
 $articles = DataManager::getArticles($_GET['shoppingListId']);
 
-if (!AuthenticationManager::isAuthenticated()) {      
-    Util::redirect("index.php?view=login");    
+$user = AuthenticationManager::getAuthenticatedUser();
+if (isset($user) ? !$user->hasRole(RoleType::HELPER) : true) {    
+    Util::redirect("index.php?view=login");     
 }
 
 require_once('views/partials/header.php'); ?>

@@ -1,13 +1,15 @@
 <?php
 
 use Webshop\Util;
+use Webshop\RoleType; 
 use Webshop\AuthenticationManager; 
 
 $name = $_REQUEST[Webshop\Controller::SHOPPING_LIST_NAME] ?? null;
 $date = $_REQUEST[Webshop\Controller::SHOPPING_LIST_END_DATE] ?? null;
 
-if (!AuthenticationManager::isAuthenticated()) {      
-    Util::redirect("index.php?view=login");        
+$user = AuthenticationManager::getAuthenticatedUser();
+if (isset($user) ? !$user->hasRole(RoleType::HELPSEEKER) : true) {    
+    Util::redirect("index.php?view=login");     
 }
 
 
